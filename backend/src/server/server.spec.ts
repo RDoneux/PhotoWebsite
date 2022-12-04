@@ -1,12 +1,12 @@
 import { Controller } from "../controllers/controller";
 import { TestController } from "../controllers/test/test.controller";
 import { Logger, Process } from "../util/logger";
-import { ScrollsServer } from "./server";
+import { Server } from "./server";
 import * as DBService from "../services/database.service";
 import { AdminController } from "../controllers/admin/admin.controller";
 
 describe("server.ts", () => {
-  var server: ScrollsServer;
+  var server: Server;
   var testController: Controller;
   var process: Process;
 
@@ -16,7 +16,7 @@ describe("server.ts", () => {
     jest.spyOn(process, "task");
     testController = new TestController();
     jest.spyOn(testController, "initaliseRoutes");
-    server = new ScrollsServer(3000, [testController]);
+    server = new Server(3000, [testController]);
   });
 
   afterEach(() => {
@@ -31,10 +31,10 @@ describe("server.ts", () => {
     it("should produce correct logging output for successfull build", () => {
       expect(Logger.process).toHaveBeenCalledWith(
         "sServer",
-        "Starting Scrolls Server"
+        "Starting Photo Website Server"
       );
       expect(process.task).toHaveBeenCalledWith(
-        "Scrolls Server listening on port: 3000"
+        "Photo Website Server listening on port: 3000"
       );
       expect(process.task).toHaveBeenCalledWith(
         "All controllers initalised",
@@ -46,7 +46,7 @@ describe("server.ts", () => {
     });
     it("should warn the user if no controllers are passed", () => {
       server.close();
-      server = new ScrollsServer(3000);
+      server = new Server(3000);
       expect(process.task).toHaveBeenCalledWith(
         "No controllers have been provided",
         "WARNING"
@@ -87,7 +87,7 @@ describe("server.ts", () => {
       jest.spyOn(Logger, "info").mockImplementation();
       jest.spyOn(Logger, "warning").mockImplementation();
       server.close();
-      expect(Logger.info).toHaveBeenCalledWith("Closing the Scrolls Server");
+      expect(Logger.info).toHaveBeenCalledWith("Closing the Photo Website Server");
       server.close();
       expect(Logger.warning).toHaveBeenCalledWith(
         "Cannot close http server either because it hasn't been created yet or because it has already been closed"
@@ -96,7 +96,7 @@ describe("server.ts", () => {
     it("should log if http server has been closed", () => {
       jest.spyOn(Logger, "info").mockImplementation();
       server.close();
-      expect(Logger.info).toHaveBeenCalledWith("Closing the Scrolls Server");
+      expect(Logger.info).toHaveBeenCalledWith("Closing the Photo Website Server");
     });
   });
 });

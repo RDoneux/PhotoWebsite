@@ -10,14 +10,14 @@ import { issueToken, tokenAuth } from "../authorisation/tokens.auth";
 import { AdminController } from "../controllers/admin/admin.controller";
 import { Error } from "mongoose";
 
-export class ScrollsServer {
+export class Server {
   private server = express();
   private http:
     | http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>
     | undefined;
 
   constructor(port: number, controllers?: Controller[]) {
-    const sServer = Logger.process("sServer", "Starting Scrolls Server");
+    const sServer = Logger.process("sServer", "Starting Photo Website Server");
 
     http.createServer(this.server);
     this.startServer(port, controllers);
@@ -43,7 +43,7 @@ export class ScrollsServer {
 
   private setup(port: number, controllers?: Controller[]) {
     const sServer = Logger.process("sServer");
-    sServer.task(`Scrolls Server listening on port: ${port}`);
+    sServer.task(`Photo Website Server listening on port: ${port}`);
 
     this.initaliseUtilServices();
     this.initaliseAdminServices();
@@ -119,7 +119,7 @@ export class ScrollsServer {
       );
       return;
     }
-    Logger.info("Closing the Scrolls Server");
+    Logger.info("Closing the Photo Website Server");
     this.http.close();
     this.http = undefined;
   }

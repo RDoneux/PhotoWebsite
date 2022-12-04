@@ -1,7 +1,7 @@
 {
-  "name": "scrolls2.0-backend",
+  "name": "photo-website-backend",
   "version": "1.0.0",
-  "description": "A RESTful api service for Scrolls 2.0",
+  "description": "A RESTful api service for PhotoWebsite 2.0",
   "main": "index.ts",
   "scripts": {
     "test": "npx jest",
