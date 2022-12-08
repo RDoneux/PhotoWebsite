@@ -117,12 +117,12 @@ export class CollectionController implements Controller {
 
   private patchCollection = async (request: Request, response: Response) => {
     const id = request.params.id;
-    const test = new Collection(request.body).toObject();
-    delete test._id;
+    const newCollection = new Collection(request.body).toObject();
+    delete newCollection._id;
     try {
       const result = await collections[this.collection].updateOne(
         { _id: new ObjectId(id) },
-        { $set: test },
+        { $set: newCollection },
         { upsert: true }
       );
       result
@@ -154,7 +154,7 @@ export class CollectionController implements Controller {
           .send({ data: `Failed to delete Collection with id ${id}` });
       } else if (!result.deletedCount) {
         response.status(404).send({
-          data: `Failed to deleted Collection with id: ${id} because it doesn't exist`,
+          data: `Failed to delete Collection with id: ${id} because it doesn't exist`,
         });
       }
     } catch (error: any) {

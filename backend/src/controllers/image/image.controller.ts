@@ -6,7 +6,7 @@ import { Logger } from "../../util/logger";
 import { checkAuth } from "../../authorisation/basic.auth";
 import { ObjectId } from "mongodb";
 import { ICollection } from "../../models/collection.model";
-import Image from '../../models/image.model'
+import Image from "../../models/image.model";
 
 export class ImageController implements Controller {
   collection: string = "image";
@@ -24,6 +24,12 @@ export class ImageController implements Controller {
 
     // POST
     this.router.post("/", this.postImage);
+
+    //PATCH
+    this.router.patch("/:id", this.patchImage);
+
+    //DELETE
+    this.router.delete("/:id", this.deleteImage);
   }
 
   private getAllImages = async (request: Request, response: Response) => {
@@ -89,11 +95,59 @@ export class ImageController implements Controller {
   private postImage = async (request: Request, response: Response) => {
     try {
       const result = await collections[this.collection].insertOne(
-        new Image(request.body)
+        Image.create(request.body)
       );
       result
         ? response.status(201).send({ data: "Successfully inserted new Image" })
         : response.status(400).send({ data: "Failed to insert new Image" });
+    } catch (error: any) {
+      Logger.error(error);
+      response.status(500).send({ data: error.message });
+    }
+  };
+
+  private patchImage = async (request: Request, response: Response) => {
+    const id = request.params.id;
+    const newImage = new Image(request.body).toObject();
+    delete newImage._id;
+    try {
+      const result = await collections[this.collection].updateOne(
+        { _id: new ObjectId(id) },
+        { $set: newImage },
+        { upsert: true }
+      );
+      result
+        ? response
+            .status(201)
+            .send({ data: `Successfully updated Image with id: ${id}` })
+        : response
+            .status(400)
+            .send({ data: `Failed to update Image with id: ${id}` });
+    } catch (error: any) {
+      Logger.error(error);
+      response.status(500).send({ data: error.message });
+    }
+  };
+
+  private deleteImage = async (request: Request, response: Response) => {
+    const id = request.params.id;
+    try {
+      const result = await collections[this.collection].deleteOne({
+        _id: new ObjectId(id),
+      });
+      if (result && result.deletedCount) {
+        response
+          .status(202)
+          .send({ data: `Successfully deleted Image with id ${id}` });
+      } else if (!result) {
+        response
+          .status(400)
+          .send({ data: `Failed to delete Image with id ${id}` });
+      } else if (!result.deletedCount) {
+        response.status(404).send({
+          data: `Failed to delete Image with id: ${id} because it doesn't exist`,
+        });
+      }
     } catch (error: any) {
       Logger.error(error);
       response.status(500).send({ data: error.message });
