@@ -27,6 +27,9 @@ export class CollectionController implements Controller {
 
     // PATCH
     this.router.patch("/:id", this.patchCollection);
+
+    // DELETE
+    this.router.delete("/:id", this.deleteCollection);
   }
 
   private getAllCollections = async (request: Request, response: Response) => {
@@ -112,7 +115,7 @@ export class CollectionController implements Controller {
     }
   };
 
-  patchCollection = async (request: Request, response: Response) => {
+  private patchCollection = async (request: Request, response: Response) => {
     const id = request.params.id;
     const test = new Collection(request.body).toObject();
     delete test._id;
@@ -129,6 +132,31 @@ export class CollectionController implements Controller {
         : response
             .status(400)
             .send({ data: `Failed to update collection with id: ${id}` });
+    } catch (error: any) {
+      Logger.error(error);
+      response.status(500).send({ data: error.message });
+    }
+  };
+
+  private deleteCollection = async (request: Request, response: Response) => {
+    const id = request.params.id;
+    try {
+      const result = await collections[this.collection].deleteOne({
+        _id: new ObjectId(id),
+      });
+      if (result && result.deletedCount) {
+        response
+          .status(202)
+          .send({ data: `Successfully deleted Collection with id ${id}` });
+      } else if (!result) {
+        response
+          .status(400)
+          .send({ data: `Failed to delete Collection with id ${id}` });
+      } else if (!result.deletedCount) {
+        response.status(404).send({
+          data: `Failed to deleted Collection with id: ${id} because it doesn't exist`,
+        });
+      }
     } catch (error: any) {
       Logger.error(error);
       response.status(500).send({ data: error.message });
