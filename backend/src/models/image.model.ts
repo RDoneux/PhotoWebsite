@@ -1,13 +1,22 @@
-import { ObjectId } from "mongoose";
-
-export default class Image {
-  constructor(
-    private _id: ObjectId,
-    private title: string,
-    private author: string,
-    private date_taken: Date,
-    private url: string,
-    private selected: boolean,
-    private collections: ObjectId[]
-  ) {}
+import { Document } from "mongodb";
+import { model, ObjectId, Schema } from "mongoose";
+import mongoose from "mongoose";
+export interface IImage extends Document {
+  title: string;
+  author: string;
+  date_taken: Date;
+  url: string;
+  selected: boolean;
+  collections: ObjectId[];
 }
+
+const ImageSchema: Schema = new Schema({
+  title: String,
+  author: String,
+  date_taken: Date,
+  url: String,
+  selected: Boolean,
+  collections: [mongoose.Types.ObjectId],
+});
+
+export default model<IImage>("Image", ImageSchema);

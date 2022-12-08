@@ -1,11 +1,12 @@
 import { Request, Response, Router } from "express";
 import { collections } from "../../services/database.service";
 import { Controller } from "../controller";
-import Image from "../../models/image.model";
+import { IImage } from "../../models/image.model";
 import { Logger } from "../../util/logger";
 import { checkAuth } from "../../authorisation/basic.auth";
 import { ObjectId } from "mongodb";
-import Collection from "../../models/collection.model";
+import { ICollection } from "../../models/collection.model";
+import Image from '../../models/image.model'
 
 export class ImageController implements Controller {
   collection: string = "image";
@@ -20,7 +21,7 @@ export class ImageController implements Controller {
 
     // authorisation required for all actions below
     this.router.use(checkAuth(["admin"]));
-    
+
     // POST
     this.router.post("/", this.postImage);
   }
@@ -29,7 +30,7 @@ export class ImageController implements Controller {
     try {
       const images = (await collections[this.collection]
         .find({})
-        .toArray()) as Image[];
+        .toArray()) as IImage[];
       response.status(200).send({ data: images });
     } catch (error: any) {
       Logger.error(error);
@@ -42,7 +43,7 @@ export class ImageController implements Controller {
     try {
       const image = (await collections[this.collection].findOne({
         _id: new ObjectId(id),
-      })) as Image;
+      })) as IImage;
       image
         ? response.status(200).send({ data: image })
         : response.status(404).send({ data: `image with id ${id} not found` });
@@ -75,7 +76,7 @@ export class ImageController implements Controller {
             $limit: 1,
           },
         ])
-        .toArray()) as Collection[];
+        .toArray()) as ICollection[];
       colls
         ? response.status(200).send({ data: colls[0] })
         : response.status(404).send({ data: `image with id ${id} not found` });
@@ -88,7 +89,7 @@ export class ImageController implements Controller {
   private postImage = async (request: Request, response: Response) => {
     try {
       const result = await collections[this.collection].insertOne(
-        request.body as Image
+        new Image(request.body)
       );
       result
         ? response.status(201).send({ data: "Successfully inserted new Image" })

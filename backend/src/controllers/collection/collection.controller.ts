@@ -2,10 +2,11 @@ import { Router, Request, Response } from "express";
 import { ObjectId } from "mongodb";
 import { checkAuth } from "../../authorisation/basic.auth";
 import Collection from "../../models/collection.model";
+import { ICollection } from "../../models/collection.model";
 import { collections } from "../../services/database.service";
 import { Logger } from "../../util/logger";
 import { Controller } from "../controller";
-import Image from "../../models/image.model";
+import { IImage } from "../../models/image.model";
 
 export class CollectionController implements Controller {
   collection: string = "collection";
@@ -29,7 +30,7 @@ export class CollectionController implements Controller {
     try {
       const colls = (await collections[this.collection]
         .find({})
-        .toArray()) as Collection[];
+        .toArray()) as ICollection[];
       response.status(200).send({ data: colls });
     } catch (error: any) {
       Logger.error(error);
@@ -42,7 +43,7 @@ export class CollectionController implements Controller {
     try {
       const collection = (await collections[this.collection].findOne({
         _id: new ObjectId(id),
-      })) as Collection;
+      })) as ICollection;
       collection
         ? response.status(200).send({ data: collection })
         : response
@@ -77,7 +78,7 @@ export class CollectionController implements Controller {
             $limit: 1,
           },
         ])
-        .toArray()) as Image[];
+        .toArray()) as IImage[];
       images
         ? response.status(200).send({ data: images[0] })
         : response
@@ -92,8 +93,9 @@ export class CollectionController implements Controller {
   private postCollection = async (request: Request, response: Response) => {
     try {
       const result = await collections[this.collection].insertOne(
-        request.body as Collection
+        new Collection(request.body)
       );
+
       result
         ? response
             .status(201)
