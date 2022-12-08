@@ -32,7 +32,7 @@ export class CollectionController implements Controller {
     this.router.delete("/:id", this.deleteCollection);
   }
 
-  private getAllCollections = async (request: Request, response: Response) => {
+  getAllCollections = async (request: Request, response: Response) => {
     try {
       const colls = (await collections[this.collection]
         .find({})
@@ -44,7 +44,7 @@ export class CollectionController implements Controller {
     }
   };
 
-  private getCollection = async (request: Request, response: Response) => {
+  getCollection = async (request: Request, response: Response) => {
     const id = request.params.id;
     try {
       const collection = (await collections[this.collection].findOne({
@@ -61,10 +61,7 @@ export class CollectionController implements Controller {
     }
   };
 
-  private getCollectionImages = async (
-    request: Request,
-    response: Response
-  ) => {
+  getCollectionImages = async (request: Request, response: Response) => {
     const id = request.params.id;
     try {
       const images = (await collections[this.collection]
@@ -96,10 +93,10 @@ export class CollectionController implements Controller {
     }
   };
 
-  private postCollection = async (request: Request, response: Response) => {
+  postCollection = async (request: Request, response: Response) => {
     try {
       const result = await collections[this.collection].insertOne(
-        Collection.create(request.body)
+        await Collection.create(request.body)
       );
 
       result
@@ -115,7 +112,7 @@ export class CollectionController implements Controller {
     }
   };
 
-  private patchCollection = async (request: Request, response: Response) => {
+  patchCollection = async (request: Request, response: Response) => {
     const id = request.params.id;
     const newCollection = new Collection(request.body).toObject();
     delete newCollection._id;
@@ -138,7 +135,7 @@ export class CollectionController implements Controller {
     }
   };
 
-  private deleteCollection = async (request: Request, response: Response) => {
+  deleteCollection = async (request: Request, response: Response) => {
     const id = request.params.id;
     try {
       const result = await collections[this.collection].deleteOne({

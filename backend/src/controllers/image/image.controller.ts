@@ -32,7 +32,7 @@ export class ImageController implements Controller {
     this.router.delete("/:id", this.deleteImage);
   }
 
-  private getAllImages = async (request: Request, response: Response) => {
+  getAllImages = async (request: Request, response: Response) => {
     try {
       const images = (await collections[this.collection]
         .find({})
@@ -44,7 +44,7 @@ export class ImageController implements Controller {
     }
   };
 
-  private getImageById = async (request: Request, response: Response) => {
+  getImageById = async (request: Request, response: Response) => {
     const id = request.params.id;
     try {
       const image = (await collections[this.collection].findOne({
@@ -59,10 +59,7 @@ export class ImageController implements Controller {
     }
   };
 
-  private getImageCollections = async (
-    request: Request,
-    response: Response
-  ) => {
+  getImageCollections = async (request: Request, response: Response) => {
     const id = request.params.id;
     try {
       const colls = (await collections[this.collection]
@@ -92,10 +89,10 @@ export class ImageController implements Controller {
     }
   };
 
-  private postImage = async (request: Request, response: Response) => {
+  postImage = async (request: Request, response: Response) => {
     try {
       const result = await collections[this.collection].insertOne(
-        Image.create(request.body)
+        await Image.create(request.body)
       );
       result
         ? response.status(201).send({ data: "Successfully inserted new Image" })
@@ -106,7 +103,7 @@ export class ImageController implements Controller {
     }
   };
 
-  private patchImage = async (request: Request, response: Response) => {
+  patchImage = async (request: Request, response: Response) => {
     const id = request.params.id;
     const newImage = new Image(request.body).toObject();
     delete newImage._id;
@@ -129,7 +126,7 @@ export class ImageController implements Controller {
     }
   };
 
-  private deleteImage = async (request: Request, response: Response) => {
+  deleteImage = async (request: Request, response: Response) => {
     const id = request.params.id;
     try {
       const result = await collections[this.collection].deleteOne({
