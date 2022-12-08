@@ -7,7 +7,7 @@ export interface ICollection extends Document {
 }
 
 export const CollectionSchema: Schema = new Schema({
-  images: [mongoose.Types.ObjectId],
+  images: [Schema.Types.ObjectId],
 });
 
 export default model<ICollection>("Collection", CollectionSchema);

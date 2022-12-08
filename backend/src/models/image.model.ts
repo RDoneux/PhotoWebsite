@@ -16,7 +16,7 @@ const ImageSchema: Schema = new Schema({
   date_taken: Date,
   url: String,
   selected: Boolean,
-  collections: [mongoose.Types.ObjectId],
+  collections: [Schema.Types.ObjectId],
 });
 
 export default model<IImage>("Image", ImageSchema);
