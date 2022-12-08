@@ -24,6 +24,9 @@ export class CollectionController implements Controller {
 
     // POST
     this.router.post("/", this.postCollection);
+
+    // PATCH
+    this.router.patch("/:id", this.patchCollection);
   }
 
   private getAllCollections = async (request: Request, response: Response) => {
@@ -93,7 +96,7 @@ export class CollectionController implements Controller {
   private postCollection = async (request: Request, response: Response) => {
     try {
       const result = await collections[this.collection].insertOne(
-        new Collection(request.body)
+        Collection.create(request.body)
       );
 
       result
@@ -103,6 +106,29 @@ export class CollectionController implements Controller {
         : response
             .status(400)
             .send({ data: "Failed to insert new Collection" });
+    } catch (error: any) {
+      Logger.error(error);
+      response.status(500).send({ data: error.message });
+    }
+  };
+
+  patchCollection = async (request: Request, response: Response) => {
+    const id = request.params.id;
+    const test = new Collection(request.body).toObject();
+    delete test._id;
+    try {
+      const result = await collections[this.collection].updateOne(
+        { _id: new ObjectId(id) },
+        { $set: test },
+        { upsert: true }
+      );
+      result
+        ? response
+            .status(201)
+            .send({ data: `Successfully updated collection with id: ${id}` })
+        : response
+            .status(400)
+            .send({ data: `Failed to update collection with id: ${id}` });
     } catch (error: any) {
       Logger.error(error);
       response.status(500).send({ data: error.message });
