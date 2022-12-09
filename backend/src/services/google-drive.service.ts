@@ -121,14 +121,13 @@ export class GoogleDriveService {
   async uploadFile(fileName: string): Promise<string> {
     const finalPath = path.resolve(
       __dirname,
-      `${process.env.PRODUCTION === "true" ? "" : "../../files"}`,
+      `${process.env.PRODUCTION === "true" ? "" : "../../temp"}`,
       fileName
     );
     const folderName = "Photos";
-
     if (!fs.existsSync(finalPath)) {
+      // fs.mkdirSync(finalPath, { recursive: true });
       Logger.error("file not found");
-      throw new Error("File not found!");
     }
 
     let folder = await this.searchFolder(folderName).catch((error) => {

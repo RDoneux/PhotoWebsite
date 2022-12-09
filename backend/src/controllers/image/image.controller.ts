@@ -10,7 +10,9 @@ import Image from "../../models/image.model";
 import path from "path";
 import fs from "fs";
 import formidable from "formidable";
-import { GoogleDriveService } from "../../services/google-drive.service";
+import {
+  uploadToGoogleDrive,
+} from "../../services/image.service";
 
 export class ImageController implements Controller {
   collection: string = "image";
@@ -111,7 +113,7 @@ export class ImageController implements Controller {
     const uploadFolder = path.join(
       __dirname,
       `${process.env.PRODUCTION === "true" ? "" : "../../../"}`,
-      "files"
+      "temp"
     );
     if (!fs.existsSync(uploadFolder)) {
       fs.mkdirSync(uploadFolder, { recursive: true });
@@ -124,41 +126,34 @@ export class ImageController implements Controller {
         return response.status(400).send({
           data: "There was an error parsing upload files",
         });
-      }
-      const uploadedFiles: string[] = [];
-      for (const key in files) {
-        const file: typeof formidable.PersistentFile = files[
-          key
-        ] as unknown as typeof formidable.PersistentFile;
-        fs.renameSync(file["filepath"], path.join(uploadFolder, key));
-        uploadedFiles.push(key);
+      } else if (Object.keys(files).length > 1) {
+        return response.status(400).send({
+          data: "Cannot upload more than one image per upload request",
+        });
       }
 
-      const driveClientId = process.env.GOOGLE_DRIVE_CLIENT_ID || "";
-      const driveClientSecret = process.env.GOOGLE_DRIVE_CLIENT_SECRET || "";
-      const driveRedirectUri = process.env.GOOGLE_DRIVE_REDIRECT_URI || "";
-      const driveRefreshToken = process.env.GOOGLE_DRIVE_REFRESH_TOKEN || "";
+      const fileName = Object.keys(files)[0];
+      const file: typeof formidable.PersistentFile = files[
+        fileName
+      ] as unknown as typeof formidable.PersistentFile;
+      fs.renameSync(file["filepath"], path.join(uploadFolder, fileName));
 
-      const googleDriveService = new GoogleDriveService(
-        driveClientId,
-        driveClientSecret,
-        driveRedirectUri,
-        driveRefreshToken
-      );
-
-      const id = await googleDriveService.uploadFile(uploadedFiles[0]);
-
+      const url = await uploadToGoogleDrive(fileName);
       const jsonFields = JSON.parse(JSON.stringify(fields));
-      jsonFields.url = `https://lh3.googleusercontent.com/d/${id}`;
+      jsonFields.url = url;
 
       try {
         const result = await collections[this.collection].insertOne(
           new Image(jsonFields)
         );
+
         result
-          ? response
-              .status(201)
-              .send({ data: "Successfully inserted new Image" })
+          ? response.status(201).send({
+              data: {
+                message: "Successfully inserted new Image",
+                fileName: fileName,
+              },
+            })
           : response.status(400).send({ data: "Failed to insert new Image" });
       } catch (error: any) {
         Logger.error(error);
