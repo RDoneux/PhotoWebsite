@@ -1,7 +1,6 @@
 import fs from "fs";
 const { google } = require("googleapis");
 import * as path from "path";
-import { resolve } from "path";
 import { Logger } from "../util/logger";
 /**
  * Browse the link below to see the complete object returned for folder/file creation and search
@@ -121,12 +120,11 @@ export class GoogleDriveService {
   async uploadFile(fileName: string): Promise<string> {
     const finalPath = path.resolve(
       __dirname,
-      `${process.env.PRODUCTION === "true" ? "" : "../../temp"}`,
+      process.env.PRODUCTION === "true" ? "temp" : "../temp",
       fileName
     );
     const folderName = "Photos";
     if (!fs.existsSync(finalPath)) {
-      // fs.mkdirSync(finalPath, { recursive: true });
       Logger.error("file not found");
     }
 
