@@ -7,6 +7,10 @@ import { checkAuth } from "../../authorisation/basic.auth";
 import { ObjectId } from "mongodb";
 import { ICollection } from "../../models/collection.model";
 import Image from "../../models/image.model";
+import path from "path";
+import fs from "fs";
+import formidable from "formidable";
+import { GoogleDriveService } from "../../services/google-drive.service";
 
 export class ImageController implements Controller {
   collection: string = "image";
@@ -23,7 +27,7 @@ export class ImageController implements Controller {
     this.router.use(checkAuth(["admin"]));
 
     // POST
-    this.router.post("/", this.postImage);
+    this.router.post("/", this.uploadImage);
 
     //PATCH
     this.router.patch("/:id", this.patchImage);
@@ -89,18 +93,78 @@ export class ImageController implements Controller {
     }
   };
 
-  postImage = async (request: Request, response: Response) => {
-    try {
-      const result = await collections[this.collection].insertOne(
-        await Image.create(request.body)
-      );
-      result
-        ? response.status(201).send({ data: "Successfully inserted new Image" })
-        : response.status(400).send({ data: "Failed to insert new Image" });
-    } catch (error: any) {
-      Logger.error(error);
-      response.status(500).send({ data: error.message });
+  // postImage = async (request: Request, response: Response) => {
+  //   try {
+  //     const result = await collections[this.collection].insertOne(
+  //       await Image.create(request.body)
+  //     );
+  //     result
+  //       ? response.status(201).send({ data: "Successfully inserted new Image" })
+  //       : response.status(400).send({ data: "Failed to insert new Image" });
+  //   } catch (error: any) {
+  //     Logger.error(error);
+  //     response.status(500).send({ data: error.message });
+  //   }
+  // };
+
+  uploadImage = async (request: Request, response: Response) => {
+    const uploadFolder = path.join(
+      __dirname,
+      `${process.env.PRODUCTION === "true" ? "" : "../../../"}`,
+      "files"
+    );
+    if (!fs.existsSync(uploadFolder)) {
+      fs.mkdirSync(uploadFolder, { recursive: true });
     }
+    const form = formidable({ multiples: true, uploadDir: uploadFolder });
+
+    /* istanbul ignore next */
+    form.parse(request, async (err, fields, files) => {
+      if (err) {
+        return response.status(400).send({
+          data: "There was an error parsing upload files",
+        });
+      }
+      const uploadedFiles: string[] = [];
+      for (const key in files) {
+        const file: typeof formidable.PersistentFile = files[
+          key
+        ] as unknown as typeof formidable.PersistentFile;
+        fs.renameSync(file["filepath"], path.join(uploadFolder, key));
+        uploadedFiles.push(key);
+      }
+
+      const driveClientId = process.env.GOOGLE_DRIVE_CLIENT_ID || "";
+      const driveClientSecret = process.env.GOOGLE_DRIVE_CLIENT_SECRET || "";
+      const driveRedirectUri = process.env.GOOGLE_DRIVE_REDIRECT_URI || "";
+      const driveRefreshToken = process.env.GOOGLE_DRIVE_REFRESH_TOKEN || "";
+
+      const googleDriveService = new GoogleDriveService(
+        driveClientId,
+        driveClientSecret,
+        driveRedirectUri,
+        driveRefreshToken
+      );
+
+      const id = await googleDriveService.uploadFile(uploadedFiles[0]);
+
+      const jsonFields = JSON.parse(JSON.stringify(fields));
+      jsonFields.url = `https://lh3.googleusercontent.com/d/${id}`;
+
+      try {
+        const result = await collections[this.collection].insertOne(
+          new Image(jsonFields)
+        );
+        result
+          ? response
+              .status(201)
+              .send({ data: "Successfully inserted new Image" })
+          : response.status(400).send({ data: "Failed to insert new Image" });
+      } catch (error: any) {
+        Logger.error(error);
+        response.status(500).send({ data: error.message });
+      }
+    });
   };
 
   patchImage = async (request: Request, response: Response) => {
