@@ -5,7 +5,6 @@ import { Controller } from "../controller";
 import Test from "../../models/test.model";
 import { ObjectId } from "mongodb";
 import { checkAuth } from "../../authorisation/basic.auth";
-import formidable from "formidable";
 import path from "path";
 import fs from "fs";
 
@@ -22,7 +21,7 @@ export class TestController implements Controller {
     this.router.use(checkAuth(["admin"]));
     // POST
     this.router.post("/", this.postTestData);
-    this.router.post("/upload", this.uploadTestFile);
+    // this.router.post("/upload", this.uploadTestFile);
     // PATCH
     this.router.patch("/:id", this.patchTestData);
     // DELETE
@@ -70,41 +69,41 @@ export class TestController implements Controller {
     }
   };
 
-  uploadTestFile = async (request: Request, response: Response) => {
-    const uploadFolder = path.join(
-      __dirname,
-      `${process.env.PRODUCTION === "true" ? "" : "../../../"}`,
-      "files"
-    );
-    if (!fs.existsSync(uploadFolder)) {
-      fs.mkdirSync(uploadFolder, { recursive: true });
-    }
-    const form = formidable({ multiples: true, uploadDir: uploadFolder });
+  // uploadTestFile = async (request: Request, response: Response) => {
+  //   const uploadFolder = path.join(
+  //     __dirname,
+  //     `${process.env.PRODUCTION === "true" ? "" : "../../../"}`,
+  //     "files"
+  //   );
+  //   if (!fs.existsSync(uploadFolder)) {
+  //     fs.mkdirSync(uploadFolder, { recursive: true });
+  //   }
+  //   const form = formidable({ multiples: true, uploadDir: uploadFolder });
 
-    /* istanbul ignore next */
-    form.parse(request, async (err, fields, files) => {
-      if (err) {
-        return response.status(400).send({
-          data: "There was an error parsing upload files",
-        });
-      }
-      const uploadedFiles: string[] = [];
-      for (const key in files) {
-        const file: typeof formidable.PersistentFile = files[
-          key
-        ] as unknown as typeof formidable.PersistentFile;
-        fs.renameSync(file["filepath"], path.join(uploadFolder, key));
-        uploadedFiles.push(key);
-      }
-      response.status(200).send({
-        data: {
-          message:
-            "Files successfully uploaded. They can be found at backend/files",
-          filesUploaded: uploadedFiles,
-        },
-      });
-    });
-  };
+  //   /* istanbul ignore next */
+  //   form.parse(request, async (err, fields, files) => {
+  //     if (err) {
+  //       return response.status(400).send({
+  //         data: "There was an error parsing upload files",
+  //       });
+  //     }
+  //     const uploadedFiles: string[] = [];
+  //     for (const key in files) {
+  //       const file: typeof formidable.PersistentFile = files[
+  //         key
+  //       ] as unknown as typeof formidable.PersistentFile;
+  //       fs.renameSync(file["filepath"], path.join(uploadFolder, key));
+  //       uploadedFiles.push(key);
+  //     }
+  //     response.status(200).send({
+  //       data: {
+  //         message:
+  //           "Files successfully uploaded. They can be found at backend/files",
+  //         filesUploaded: uploadedFiles,
+  //       },
+  //     });
+  //   });
+  // };
 
   patchTestData = async (request: Request, response: Response) => {
     const id = request.params.id;

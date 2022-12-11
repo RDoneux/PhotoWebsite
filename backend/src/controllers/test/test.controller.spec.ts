@@ -133,61 +133,61 @@ describe("test.controller.ts", () => {
       expect(res.status).toHaveBeenCalledWith(500);
       expect(Logger.error).toHaveBeenCalled();
     });
-    it("should upload selected files for development", () => {
-      const req: any = {
-        method: "POST",
-        on: jest.fn().mockReturnThis(),
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        formData: {
-          image: image,
-        },
-      };
-      const res: any = {
-        status: jest.fn().mockReturnThis(),
-        send: jest.fn(),
-      };
+    // it("should upload selected files for development", () => {
+    //   const req: any = {
+    //     method: "POST",
+    //     on: jest.fn().mockReturnThis(),
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //     formData: {
+    //       image: image,
+    //     },
+    //   };
+    //   const res: any = {
+    //     status: jest.fn().mockReturnThis(),
+    //     send: jest.fn(),
+    //   };
 
-      process.env = { PRODUCTION: "false" };
-      jest.spyOn(path, "join");
-      jest.spyOn(fs, "mkdirSync").mockImplementation();
-      component.uploadTestFile(req, res);
+    //   process.env = { PRODUCTION: "false" };
+    //   jest.spyOn(path, "join");
+    //   jest.spyOn(fs, "mkdirSync").mockImplementation();
+    //   component.uploadTestFile(req, res);
 
-      expect(path.join).toHaveBeenCalledWith(
-        expect.any(String),
-        "../../../",
-        "files"
-      );
+    //   expect(path.join).toHaveBeenCalledWith(
+    //     expect.any(String),
+    //     "../../../",
+    //     "files"
+    //   );
 
-      process.env = { PRODUCTION: "true" };
-      component.uploadTestFile(req, res);
+    //   process.env = { PRODUCTION: "true" };
+    //   component.uploadTestFile(req, res);
 
-      expect(path.join).toHaveBeenCalledWith(expect.any(String), "", "files");
-    });
-    it("should create new folder if doesn't exist", () => {
-      jest.spyOn(fs, "mkdirSync").mockImplementation();
+    //   expect(path.join).toHaveBeenCalledWith(expect.any(String), "", "files");
+    // });
+    // it("should create new folder if doesn't exist", () => {
+    //   jest.spyOn(fs, "mkdirSync").mockImplementation();
 
-      const req: any = {
-        method: "POST",
-        on: jest.fn().mockReturnThis(),
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        formData: {
-          image: image,
-        },
-      };
-      const res: any = {
-        status: jest.fn().mockReturnThis(),
-        send: jest.fn(),
-      };
-      process.env = { PRODUCTION: "false" };
+    //   const req: any = {
+    //     method: "POST",
+    //     on: jest.fn().mockReturnThis(),
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //     formData: {
+    //       image: image,
+    //     },
+    //   };
+    //   const res: any = {
+    //     status: jest.fn().mockReturnThis(),
+    //     send: jest.fn(),
+    //   };
+    //   process.env = { PRODUCTION: "false" };
 
-      component.uploadTestFile(req, res);
+    //   component.uploadTestFile(req, res);
 
-      expect(fs.mkdirSync).toHaveBeenCalledTimes(1);
-    });
+    //   expect(fs.mkdirSync).toHaveBeenCalledTimes(1);
+    // });
   });
   describe("PATCH", () => {
     it("should provide 200 response with given body", async () => {
