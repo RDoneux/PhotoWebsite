@@ -92,7 +92,10 @@ export class ImageController implements Controller {
   };
 
   uploadImage = async (request: Request, response: Response) => {
-    if (!request.files) return;
+    if (!request.files || !request.files.length) {
+      response.status(400).send({ data: "no files attached" });
+      return;
+    }
     const filesUploaded: string[] = [];
     for (var i = 0; i < request.files.length; i++) {
       const fileName = request.files[i].originalname;
@@ -108,9 +111,7 @@ export class ImageController implements Controller {
         );
         result
           ? filesUploaded.push(fileName)
-          : response
-              .status(400)
-              .send({ data: "Failed to upload new Image" });
+          : response.status(400).send({ data: "Failed to upload new Image" });
       } catch (error: any) {
         Logger.error(error);
         response.status(500).send({ data: error.message });

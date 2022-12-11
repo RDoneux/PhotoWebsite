@@ -1,9 +1,9 @@
 import path from "path";
 import fs from "fs";
 import { GoogleDriveService } from "./google-drive.service";
-import { Request } from "express";
 import multer from "multer";
 
+/* istanbul ignore file */
 export async function uploadToGoogleDrive(file: string): Promise<string> {
   const driveClientId = process.env.GOOGLE_DRIVE_CLIENT_ID || "";
   const driveClientSecret = process.env.GOOGLE_DRIVE_CLIENT_SECRET || "";

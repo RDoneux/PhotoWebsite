@@ -2,7 +2,7 @@ import { collections } from "../../services/database.service";
 import { Logger } from "../../util/logger";
 import { ObjectId } from "mongodb";
 import { ImageController } from "./image.controller";
-import Image from "../../models/image.model";
+import * as imageService from "../../services/image.service";
 
 describe("Image Controller", () => {
   var component: ImageController;
@@ -169,40 +169,78 @@ describe("Image Controller", () => {
 
   describe("POST", () => {
     it("should provide 201 response with given body", async () => {
-      const req: any = { body: { test: "test-body" } };
-      const res: any = { status: jest.fn().mockReturnThis(), send: jest.fn() };
+      const req: any = { files: [{ originalname: "test-file-name" }] };
+      const res: any = {
+        status: jest.fn().mockReturnThis(),
+        send: jest.fn(),
+      };
       collections["image"] = {
         insertOne: jest.fn().mockReturnValue(true),
       };
-      jest.spyOn(Image, "create").mockImplementation();
-      await component.postImage(req, res);
-      expect(Image.create).toHaveBeenCalledWith({ test: "test-body" });
+      jest.spyOn(imageService, "uploadToGoogleDrive").mockImplementation();
+      await component.uploadImage(req, res);
+
+      expect(imageService.uploadToGoogleDrive).toHaveBeenCalledWith(
+        "test-file-name"
+      );
       expect(res.status).toHaveBeenCalledWith(201);
       expect(res.send).toHaveBeenCalledWith({
-        data: "Successfully inserted new Image",
+        data: {
+          message: "Successfully uploaded 1 Image(s)",
+          fileNames: ["test-file-name"],
+        },
       });
     });
-    it("should provide 400 response when unable to insert item", async () => {
-      const req: any = { body: { test: "test-body" } };
-      const res: any = { status: jest.fn().mockReturnThis(), send: jest.fn() };
-      collections["image"] = {
-        insertOne: jest.fn().mockReturnValue(undefined),
+    it("should provide 400 response with given body", async () => {
+      const req: any = { files: [] };
+      const res: any = {
+        status: jest.fn().mockReturnThis(),
+        send: jest.fn(),
       };
-      jest.spyOn(Image, "create").mockImplementation();
-      await component.postImage(req, res);
-      expect(Image.create).toHaveBeenCalledWith({ test: "test-body" });
+      collections["image"] = {
+        insertOne: jest.fn().mockReturnValue(true),
+      };
+      jest.spyOn(imageService, "uploadToGoogleDrive").mockImplementation();
+      await component.uploadImage(req, res);
+
+      expect(imageService.uploadToGoogleDrive).not.toHaveBeenCalled();
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.send).toHaveBeenCalledWith({
-        data: "Failed to insert new Image",
+        data: "no files attached",
       });
     });
     it("should provide 500 response with given body", async () => {
-      const req: any = { body: { test: "test-body" } };
-      const res: any = { status: jest.fn().mockReturnThis(), send: jest.fn() };
+      const req: any = { files: [{ originalname: "test-file-name" }] };
+      const res: any = {
+        status: jest.fn().mockReturnThis(),
+        send: jest.fn(),
+      };
+
       jest.spyOn(Logger, "error");
-      await component.postImage(req, res);
+      await component.uploadImage(req, res);
+
       expect(res.status).toHaveBeenCalledWith(500);
       expect(Logger.error).toHaveBeenCalled();
+    });
+    it("should provide 400 response with given body", async () => {
+      const req: any = { files: [{ originalname: "test-file-name" }] };
+      const res: any = {
+        status: jest.fn().mockReturnThis(),
+        send: jest.fn(),
+      };
+      collections["image"] = {
+        insertOne: jest.fn().mockReturnValue(false),
+      };
+      jest.spyOn(imageService, "uploadToGoogleDrive").mockImplementation();
+      await component.uploadImage(req, res);
+
+      expect(imageService.uploadToGoogleDrive).toHaveBeenCalledWith(
+        "test-file-name"
+      );
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.send).toHaveBeenCalledWith({
+        data: "Failed to upload new Image",
+      });
     });
   });
 

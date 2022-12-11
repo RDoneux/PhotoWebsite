@@ -2,11 +2,7 @@ import fs from "fs";
 const { google } = require("googleapis");
 import * as path from "path";
 import { Logger } from "../util/logger";
-/**
- * Browse the link below to see the complete object returned for folder/file creation and search
- *
- * @link https://developers.google.com/drive/api/v3/reference/files#resource
- */
+
 type PartialDriveFile = {
   id: string;
   name: string;
@@ -19,6 +15,7 @@ type SearchResultResponse = {
   files: PartialDriveFile[];
 };
 
+/* istanbul ignore file */
 export class GoogleDriveService {
   private driveClient;
 
@@ -36,7 +33,7 @@ export class GoogleDriveService {
     );
   }
 
-  createDriveClient(
+  private createDriveClient(
     clientId: string,
     clientSecret: string,
     redirectUri: string,
