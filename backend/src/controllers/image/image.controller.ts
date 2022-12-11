@@ -8,6 +8,7 @@ import { ObjectId } from "mongodb";
 import { ICollection } from "../../models/collection.model";
 import Image from "../../models/image.model";
 import { imageUpload, uploadToGoogleDrive } from "../../services/image.service";
+import { ClientRequest } from "http";
 
 export class ImageController implements Controller {
   collection: string = "image";
@@ -24,7 +25,7 @@ export class ImageController implements Controller {
     this.router.use(checkAuth(["admin"]));
 
     // POST
-    this.router.post("/", imageUpload.single("file"), this.uploadImage);
+    this.router.post("/", imageUpload.any(), this.uploadImage);
 
     //PATCH
     this.router.patch("/:id", this.patchImage);
@@ -91,28 +92,36 @@ export class ImageController implements Controller {
   };
 
   uploadImage = async (request: Request, response: Response) => {
-    if (!request.file?.originalname) return;
-
-    const fileName = request.file.originalname;
-    request.body.url = await uploadToGoogleDrive(fileName);
-
-    try {
-      const result = await collections[this.collection].insertOne(
-        new Image(request.body)
-      );
-
-      result
-        ? response.status(201).send({
-            data: {
-              message: "Successfully inserted new Image",
-              fileName: fileName,
-            },
+    if (!request.files) return;
+    const filesUploaded: string[] = [];
+    for (var i = 0; i < request.files.length; i++) {
+      const fileName = request.files[i].originalname;
+      try {
+        const result = await collections[this.collection].insertOne(
+          new Image({
+            title: fileName,
+            author: "unknown",
+            url: await uploadToGoogleDrive(fileName),
+            selected: false,
+            collections: [],
           })
-        : response.status(400).send({ data: "Failed to insert new Image" });
-    } catch (error: any) {
-      Logger.error(error);
-      response.status(500).send({ data: error.message });
+        );
+        result
+          ? filesUploaded.push(fileName)
+          : response
+              .status(400)
+              .send({ data: "Failed to upload new Image" });
+      } catch (error: any) {
+        Logger.error(error);
+        response.status(500).send({ data: error.message });
+      }
     }
+    response.status(201).send({
+      data: {
+        message: `Successfully uploaded ${filesUploaded.length} Image(s)`,
+        fileNames: filesUploaded,
+      },
+    });
   };
 
   patchImage = async (request: Request, response: Response) => {
