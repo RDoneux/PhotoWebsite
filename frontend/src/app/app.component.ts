@@ -9,6 +9,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'frontend';
 
+  /* istanbul ignore file */
   constructor(private http: HttpClient) {
     // this.http
     //   .get('api/images', {
@@ -87,6 +88,5 @@ export class AppComponent {
           console.log(response);
         },
       });
-
   }
 }
