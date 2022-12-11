@@ -126,7 +126,7 @@ export class GoogleDriveService {
     }
 
     let folder = await this.searchFolder(folderName).catch((error) => {
-      console.error(error);
+      Logger.error(error);
       return null;
     });
 
@@ -136,16 +136,15 @@ export class GoogleDriveService {
 
     await this.saveFile(fileName, finalPath, "image/jpg", folder.id).catch(
       (error: any) => {
-        console.error(error);
+        Logger.error(error);
       }
     );
 
-    console.info("File uploaded successfully!");
+    Logger.info("File uploaded successfully!");
 
     // Delete the file on the server
     fs.unlinkSync(finalPath);
     const id = await this.searchFiles(fileName);
     return id?.id ?? "undefined";
-    // return await this.searchFiles("test file upload")
   }
 }
