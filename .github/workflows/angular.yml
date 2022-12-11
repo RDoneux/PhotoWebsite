@@ -25,6 +25,6 @@ jobs:
         run: |
           npm i
           npm run build:prod
-          working-directory: ./frontend
+        working-directory: ./frontend
 
         
