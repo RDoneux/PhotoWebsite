@@ -6,7 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./components.component.scss'],
 })
 export class ComponentsComponent {
-  /* istanbul ignore file */
   printValueChange(event: string) {
     console.log(event);
   }

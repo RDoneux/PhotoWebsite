@@ -1,6 +1,10 @@
 @import "index";
 
-.text-input__container {
+:host {
+  display: block;
+}
+
+.text-area__container {
   display: flex;
   flex-direction: column;
 
@@ -8,23 +12,23 @@
   height: 100%;
 
   margin-top: 0.5rem;
-
-  .text-input__label {
+  .text-area__label {
     font-family: $font-family;
     font-size: $font-size-medium;
     line-height: $font-size-medium;
   }
 
-  .text-input__input {
+  .text-area__area {
     height: 30px;
     font-size: $font-size-medium;
-    padding: 0 0.5rem;
+    padding: 0.5rem;
     background-color: $input-background-colour;
     border: 1px solid $input-border-colour;
 
     border-radius: 3px;
     transition: box-shadow 0.1s linear;
 
+    height: 100%;
     &:focus,
     &:focus-visible,
     &:active {
