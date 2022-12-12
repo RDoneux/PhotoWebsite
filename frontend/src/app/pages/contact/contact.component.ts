@@ -6,12 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./contact.component.scss'],
 })
 export class ContactComponent {
-  name: string | undefined = undefined;
+  contactEmail: string | undefined = undefined;
   subject: string | undefined = undefined;
   message: string | undefined = undefined;
 
-  onNameChange(event: string) {
-    this.name = event;
+  onContactEmailChange(event: string) {
+    this.contactEmail = event;
   }
 
   onSubjectChange(event: string) {
@@ -23,6 +23,6 @@ export class ContactComponent {
   }
 
   onSubmit() {
-    console.log(this.name, ' : ', this.subject, ' : ', this.message);
+    console.log(this.contactEmail, ' : ', this.subject, ' : ', this.message);
   }
 }
