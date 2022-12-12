@@ -1,0 +1,10 @@
+<div class="text-area__container">
+  <label class="text-area__label" for="textarea">{{ label }}</label>
+  <textarea
+    class="text-area__area"
+    id="textarea"
+    [placeholder]="placeholder"
+    [ngModel]="value"
+    (ngModelChange)="onModelChanged($event)"
+  ></textarea>
+</div>

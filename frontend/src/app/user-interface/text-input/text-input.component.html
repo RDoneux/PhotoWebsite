@@ -1,0 +1,13 @@
+<div class="text-input__container">
+  <label class="text-input__label" for="input">
+    <span>{{ label }}</span>
+  </label>
+  <input
+    class="text-input__input"
+    id="input"
+    type="text"
+    [placeholder]="placeholder"
+    [ngModel]="value"
+    (ngModelChange)="onModelChanged($event)"
+  />
+</div>

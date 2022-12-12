@@ -1,0 +1,10 @@
+<app-text-input
+  [label]="'Text Input'"
+  (valueChanged)="printValueChange($event)"
+></app-text-input>
+<app-text-area
+  style="height: 100px"
+  [label]="'Text Area'"
+  (valueChanged)="printValueChange($event)"
+></app-text-area>
+<app-button [label]="'Button'" (submit)="printSubmit($event)"></app-button>
