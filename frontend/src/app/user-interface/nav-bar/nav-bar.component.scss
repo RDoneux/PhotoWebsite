@@ -9,6 +9,7 @@
   width: 100%;
 
   padding: 0.5rem 0;
+  margin: 0.2rem 0;
 
   .nav-bar__link {
     &:hover {
@@ -27,10 +28,8 @@
     margin: 0;
     justify-content: space-evenly;
 
-    .nav-bar__link {
-      &:not(:last-child)::after {
-        content: "";
-      }
+    .nav-bar__link.active {
+      font-weight: 700;
     }
   }
 }
