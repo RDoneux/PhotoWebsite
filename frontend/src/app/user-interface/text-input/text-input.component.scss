@@ -22,7 +22,7 @@
     background-color: $input-background-colour;
     border: 1px solid $input-border-colour;
 
-    border-radius: 3px;
+    border-radius: $input-border-radius;
     transition: box-shadow 0.1s linear;
 
     &:focus,

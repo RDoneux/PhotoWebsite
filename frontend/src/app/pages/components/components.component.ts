@@ -9,4 +9,7 @@ export class ComponentsComponent {
   printValueChange(event: string) {
     console.log(event);
   }
+  printSubmit(event: Date) {
+    console.log(event);
+  }
 }
