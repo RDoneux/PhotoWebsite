@@ -9,6 +9,33 @@ const routes: Routes = [
         (m) => m.ComponentsModule
       ),
   },
+  {
+    path: 'contact',
+    loadChildren: () =>
+      import('./pages/contact/contact.module').then((m) => m.ContactModule),
+  },
+  {
+    path: 'home',
+    loadChildren: () =>
+      import('./pages/home/home.module').then((m) => m.HomeModule),
+  },
+  {
+    path: 'collections',
+    loadChildren: () =>
+      import('./pages/collections/collections.module').then(
+        (m) => m.CollectionsModule
+      ),
+  },
+  {
+    path: 'about',
+    loadChildren: () =>
+      import('./pages/about/about.module').then((m) => m.AboutModule),
+  },
+  {
+    path: 'gallery',
+    loadChildren: () =>
+      import('./pages/gallery/gallery.module').then((m) => m.GalleryModule),
+  },
 ];
 
 @NgModule({
