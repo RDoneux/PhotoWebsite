@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavBarModule } from './user-interface/nav-bar/nav-bar.module';
+import { AuthorisationService } from './services/authorisation.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -12,4 +13,8 @@ import { NavBarModule } from './user-interface/nav-bar/nav-bar.module';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private authorisationService: AuthorisationService) {
+    authorisationService.requestAuthorisation();
+  }
+}
