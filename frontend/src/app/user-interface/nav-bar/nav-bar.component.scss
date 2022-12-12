@@ -1,0 +1,36 @@
+@import "index";
+
+.nav-bar__container {
+  list-style: none;
+  display: flex;
+  justify-content: space-evenly;
+  font-family: $font-family;
+  font-size: $font-size-medium;
+  width: 100%;
+
+  padding: 0.5rem 0;
+
+  .nav-bar__link {
+    &:hover {
+      cursor: pointer;
+    }
+    user-select: none;
+  }
+}
+
+@media screen and (max-height: $tablet) {
+  .nav-bar__container {
+    height: 100%;
+    width: fit-content;
+    flex-direction: column;
+    padding: 0 14px;
+    margin: 0;
+    justify-content: space-evenly;
+
+    .nav-bar__link {
+      &:not(:last-child)::after {
+        content: "";
+      }
+    }
+  }
+}
