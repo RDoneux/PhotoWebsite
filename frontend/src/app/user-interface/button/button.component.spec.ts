@@ -8,9 +8,8 @@ describe('ButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ButtonComponent ]
-    })
-    .compileComponents();
+      declarations: [ButtonComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ButtonComponent);
     component = fixture.componentInstance;
@@ -19,5 +18,14 @@ describe('ButtonComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('on submit', () => {
+    it('should emit updated value on change', () => {
+      spyOn(component.submit, 'emit');
+
+      component.onSubmit();
+      expect(component.submit.emit).toHaveBeenCalledTimes(1);
+    });
   });
 });
