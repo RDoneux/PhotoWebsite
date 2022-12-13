@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ModalService } from 'src/app/common/modal/modal.service';
 import { ContactService } from './contact.service';
 
 @Component({
@@ -12,7 +13,11 @@ export class ContactComponent {
   subject: string | undefined = undefined;
   message: string | undefined = undefined;
 
-  constructor(private service: ContactService, private router: Router) {}
+  constructor(
+    private service: ContactService,
+    private router: Router,
+    private modalService: ModalService
+  ) {}
 
   onContactEmailChange(event: string) {
     this.contactEmail = event;
@@ -41,6 +46,13 @@ export class ContactComponent {
           this.message = '';
           if (response.data.status === 201) {
             this.router.navigate(['/home']);
+            this.modalService.createModal(
+              'Thank you for your message',
+              'I will get back to you as soon as I can',
+              true,
+              '',
+              'Close'
+            );
           }
         },
       });

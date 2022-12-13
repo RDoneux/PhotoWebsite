@@ -6,10 +6,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavBarModule } from './user-interface/nav-bar/nav-bar.module';
 import { AuthorisationService } from './services/authorisation.service';
+import { ModalModule } from './common/modal/modal.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, NavBarModule],
+  imports: [
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    HttpClientModule,
+    NavBarModule,
+    ModalModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
