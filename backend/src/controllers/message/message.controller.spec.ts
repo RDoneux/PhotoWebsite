@@ -66,7 +66,7 @@ describe("message controller", () => {
       await component.postMessage(req, res);
       expect(res.status).toHaveBeenCalledWith(201);
       expect(res.send).toHaveBeenCalledWith({
-        data: "Successfully inserted new Message",
+        data: { message: "Message submitted", status: 201 },
       });
     });
     it("should provide 400 response when unable to insert item", async () => {
@@ -78,7 +78,7 @@ describe("message controller", () => {
       await component.postMessage(req, res);
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.send).toHaveBeenCalledWith({
-        data: "Failed to insert new Message",
+        data: { message: "Failed to insert new Message", status: 400 },
       });
     });
     it("should provide 500 response with given body", async () => {
