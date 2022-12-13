@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { ContactService } from './contact.service';
 
 @Component({
@@ -11,7 +12,7 @@ export class ContactComponent {
   subject: string | undefined = undefined;
   message: string | undefined = undefined;
 
-  constructor(private service: ContactService) {}
+  constructor(private service: ContactService, private router: Router) {}
 
   onContactEmailChange(event: string) {
     this.contactEmail = event;
@@ -26,7 +27,6 @@ export class ContactComponent {
   }
 
   onSubmit() {
-    console.log(this.contactEmail, ' : ', this.subject, ' : ', this.message);
     if (!this.contactEmail || !this.subject || !this.message) return;
     this.service
       .postMessage({
@@ -35,8 +35,13 @@ export class ContactComponent {
         message: this.message,
       })
       .subscribe({
-        next: (response) => {
-          console.log(response);
+        next: (response: any) => {
+          this.contactEmail = '';
+          this.subject = '';
+          this.message = '';
+          if (response.data.status === 201) {
+            this.router.navigate(['/home']);
+          }
         },
       });
   }

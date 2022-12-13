@@ -35,10 +35,15 @@ export class MessageController implements Controller {
         new Message(request.body)
       );
       result
-        ? response
-            .status(201)
-            .send({ data: "Successfully inserted new Message" })
-        : response.status(400).send({ data: "Failed to insert new Message" });
+        ? response.status(201).send({
+            data: {
+              message: "Message submitted",
+              status: 201,
+            },
+          })
+        : response.status(400).send({
+            data: { message: "Failed to insert new Message", status: 400 },
+          });
     } catch (error: any) {
       Logger.error(error);
       response.status(500).send({ data: error.message });

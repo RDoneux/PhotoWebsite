@@ -6,14 +6,17 @@
   </p>
   <app-text-input
     [label]="'Contact Email'"
+    [value]="contactEmail"
     (valueChanged)="onContactEmailChange($event)"
   ></app-text-input>
   <app-text-input
     [label]="'Subject'"
+    [value]="subject"
     (valueChanged)="onSubjectChange($event)"
   ></app-text-input>
   <app-text-area
     [label]="'Message'"
+    [value]="message"
     (valueChanged)="onMessageChange($event)"
   ></app-text-area>
   <app-button [label]="'Submit'" (submit)="onSubmit()"></app-button>
