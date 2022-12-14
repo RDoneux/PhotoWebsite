@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { CollectionsRoutingModule } from './collections-routing.module';
 import { CollectionsComponent } from './collections.component';
+import { NavBarModule } from 'src/app/user-interface/nav-bar/nav-bar.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { CollectionsComponent } from './collections.component';
   ],
   imports: [
     CommonModule,
-    CollectionsRoutingModule
+    CollectionsRoutingModule,
+    NavBarModule
   ]
 })
 export class CollectionsModule { }

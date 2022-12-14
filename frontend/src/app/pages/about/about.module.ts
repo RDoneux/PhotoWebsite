@@ -3,15 +3,10 @@ import { CommonModule } from '@angular/common';
 
 import { AboutRoutingModule } from './about-routing.module';
 import { AboutComponent } from './about.component';
-
+import { NavBarModule } from 'src/app/user-interface/nav-bar/nav-bar.module';
 
 @NgModule({
-  declarations: [
-    AboutComponent
-  ],
-  imports: [
-    CommonModule,
-    AboutRoutingModule
-  ]
+  declarations: [AboutComponent],
+  imports: [CommonModule, AboutRoutingModule, NavBarModule],
 })
-export class AboutModule { }
+export class AboutModule {}
