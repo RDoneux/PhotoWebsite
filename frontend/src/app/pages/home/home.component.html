@@ -1,4 +1,4 @@
-<div class="home__container">
+<div @fadeIn class="home__container">
   <img
     class="home__background-image"
     src="https://lh3.googleusercontent.com/d/17MHWFkMsoDXPJGZRB-XA_RuIXt9FMv9i"
@@ -6,11 +6,11 @@
   />
   <!-- <app-nav-bar style="z-index: 5"></app-nav-bar> -->
   <div class="home__title-wrapper">
-    <span class="home__header-wrapper">
+    <span @showTitle class="home__header-wrapper">
       <h1>Sara Doneux</h1>
       <h3>Photography</h3>
     </span>
-    <span class="home__menu-wrapper">
+    <span @fadeInDelayed class="home__menu-wrapper">
       <span [routerLink]="'/collections'">Collections</span>
       <app-nav-bar-break [colour]="'white'"></app-nav-bar-break>
       <span [routerLink]="'/contact'">Contact</span>
