@@ -1,2 +1,21 @@
-<app-nav-bar></app-nav-bar>
-<p>home works!</p>
+<div class="home__container">
+  <img
+    class="home__background-image"
+    src="https://lh3.googleusercontent.com/d/17MHWFkMsoDXPJGZRB-XA_RuIXt9FMv9i"
+    referrerpolicy="no-referrer"
+  />
+  <!-- <app-nav-bar style="z-index: 5"></app-nav-bar> -->
+  <div class="home__title-wrapper">
+    <span class="home__header-wrapper">
+      <h1>Sara Doneux</h1>
+      <h3>Photography</h3>
+    </span>
+    <span class="home__menu-wrapper">
+      <span [routerLink]="'/collections'">Collections</span>
+      <app-nav-bar-break [colour]="'white'"></app-nav-bar-break>
+      <span [routerLink]="'/contact'">Contact</span>
+      <app-nav-bar-break [colour]="'white'"></app-nav-bar-break>
+      <span [routerLink]="'/about'">About</span>
+    </span>
+  </div>
+</div>

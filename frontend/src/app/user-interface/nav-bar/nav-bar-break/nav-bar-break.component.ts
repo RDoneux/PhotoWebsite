@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-nav-bar-break',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./nav-bar-break.component.scss']
 })
 export class NavBarBreakComponent {
-
+  @Input() colour: string | undefined = undefined;
 }
