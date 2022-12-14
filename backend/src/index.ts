@@ -4,6 +4,7 @@ import { TestController } from "./controllers/test/test.controller";
 import dotenv from "dotenv";
 import { ImageController } from "./controllers/image/image.controller";
 import { CollectionController } from "./controllers/collection/collection.controller";
+import { MessageController } from "./controllers/message/message.controller";
 
 dotenv.config();
 console.log(figlet.textSync("Photo Website"));
@@ -11,4 +12,5 @@ new Server(Number(process.env.PORT ?? 3000), [
   new TestController(),
   new ImageController(),
   new CollectionController(),
+  new MessageController(),
 ]);

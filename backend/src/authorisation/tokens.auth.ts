@@ -18,9 +18,12 @@ export const issueToken = async (req: Request, res: Response) => {
   }
 
   if (!payload) {
-    res
-      .status(401)
-      .send({ data: "Please provide a valid username and password" });
+    res.status(201).send({
+      data: createToken(process.env.SIGNATURE, {
+        title: "visitor access",
+        privilages: ["visitor"],
+      }),
+    });
     return;
   }
 
@@ -64,11 +67,9 @@ export const tokenAuth = (req: Request, res: Response, next: NextFunction) => {
   const header = req.headers?.authorization || "";
   const [type, token] = header.split(" ");
   if (!process.env.SIGNATURE) {
-    res
-      .status(500)
-      .send({
-        data: "Cannot verify token as no environmental token signature has been provided. Please see .env.example for information on how to setup a valid .env file",
-      });
+    res.status(500).send({
+      data: "Cannot verify token as no environmental token signature has been provided. Please see .env.example for information on how to setup a valid .env file",
+    });
     return;
   }
   if (type === "Bearer") {

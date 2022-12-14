@@ -4,8 +4,12 @@
 $white: #ffffff;
 $black: #2e2e2e;
 
+$grey-100: #f3f3f3;
 $grey-500: #c8c8c8;
 $grey-800: #808080;
+
+// Page
+$default-page-colour: $grey-100;
 
 // Text
 $text-colour: $black;
@@ -25,3 +29,17 @@ $font-family-external-input: "Open Sans", sans-serif;
 
 // Font Sizes
 $font-size-medium: 1rem;
+$font-size-large: 1.8rem;
+
+// RESPONSIVE DESIGN
+
+$mobile: 480px;
+$tablet: 600px;
+$desktop: 1025px;
+
+// @media (min-width:320px)  { /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */ }
+// @media (min-width:480px)  { /* smartphones, Android phones, landscape iPhone */ }
+// @media (min-width:600px)  { /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */ }
+// @media (min-width:801px)  { /* tablet, landscape iPad, lo-res laptops ands desktops */ }
+// @media (min-width:1025px) { /* big landscape tablets, laptops, and desktops */ }
+// @media (min-width:1281px) { /* hi-res laptops and desktops */ }

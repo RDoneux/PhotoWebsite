@@ -54,7 +54,7 @@ describe("tokens", () => {
     expect(res.send).toHaveBeenCalled();
   });
 
-  it("should return 401 if no auth is sent", async () => {
+  it("should return 201 if no auth is sent", async () => {
     const req: any = {
       body: {
         title: "test-title",
@@ -69,10 +69,8 @@ describe("tokens", () => {
 
     await issueToken(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(401);
-    expect(res.send).toHaveBeenCalledWith({
-      data: "Please provide a valid username and password",
-    });
+    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.send).toHaveBeenCalled();
   });
   it("should return 500 if keyTitle and Privilages variables aren't sent", async () => {
     const req: any = {

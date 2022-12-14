@@ -1,0 +1,7 @@
+@import 'index';
+
+@media screen and (min-width: $tablet) {
+  .nav-bar-break__content {
+    display: none;
+  }
+}

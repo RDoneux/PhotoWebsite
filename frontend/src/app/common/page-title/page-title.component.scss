@@ -1,0 +1,13 @@
+@import 'index';
+
+:host {
+    display: block;
+}
+
+.page-title__wrapper{
+    font-family: $font-family;
+    font-size: $font-size-large;
+
+    display: block;
+    text-align: center;
+}

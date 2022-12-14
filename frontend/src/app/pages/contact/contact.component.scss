@@ -1,0 +1,26 @@
+@import "index";
+
+.contact__page-wrapper {
+  padding: 0 1rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .contact__response-info {
+    margin: 0;
+  }
+
+  app-text-area {
+    flex: 1 1 auto;
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media screen and (max-height: $tablet) {
+  .contact__page-wrapper {
+    padding: 1rem;
+  }
+  app-page-title {
+    display: none;
+  }
+}
