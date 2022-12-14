@@ -13,4 +13,19 @@ describe('ModalService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  describe('create modal', () => {
+    it('should create new observable', () => {
+      service.getModals().subscribe({
+        next: (response) => {
+          expect(response.title).toEqual('test-title');
+          expect(response.body).toEqual('test-body');
+          expect(response.close).toEqual(true);
+          expect(response.confirm).toEqual('');
+          expect(response.cancel).toEqual('');
+        },
+      });
+      service.createModal('test-title', 'test-body');
+    });
+  });
 });

@@ -28,6 +28,10 @@ export class ModalComponent implements OnInit {
   constructor(private service: ModalService) {}
 
   ngOnInit(): void {
+    this.getModals();
+  }
+
+  getModals() {
     this.service.getModals().subscribe({
       next: (modal: Modal) => {
         this.modal = modal;
@@ -35,7 +39,7 @@ export class ModalComponent implements OnInit {
     });
   }
 
-  closeModal(id: string) {
+  closeModal() {
     this.modal = undefined;
   }
 }

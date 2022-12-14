@@ -1,9 +1,6 @@
 <div @fadeInOut *ngIf="modal" class="modal__background">
   <div @zoomInOut class="modal__container">
-    <span
-      class="modal__close"
-      *ngIf="modal.close"
-      (click)="closeModal(modal.id)"
+    <span class="modal__close" *ngIf="modal.close" (click)="closeModal()"
       >x</span
     >
     <h1 class="modal__title">{{ modal.title }}</h1>
@@ -11,12 +8,12 @@
     <app-button
       *ngIf="modal.confirm"
       [label]="modal.confirm"
-      (submit)="closeModal(modal.id)"
+      (submit)="closeModal()"
     ></app-button>
     <app-button
       *ngIf="modal.cancel"
       [label]="modal.cancel"
-      (submit)="closeModal(modal.id)"
+      (submit)="closeModal()"
     ></app-button>
   </div>
 </div>
