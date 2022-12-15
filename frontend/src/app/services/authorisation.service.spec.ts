@@ -28,4 +28,13 @@ describe('AuthorisationService', () => {
       expect(service.authorisationBearerToken).toEqual('test-auth-token');
     });
   });
+
+  describe('get Bearer Token', () => {
+    it('should return promise of bearer token', async () => {
+      service.authorisationBearerToken = 'token';
+      const token = await service.getBearerToken();
+
+      expect(token).toEqual('Bearer token');
+    });
+  });
 });
