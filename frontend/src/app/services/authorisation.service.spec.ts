@@ -25,9 +25,7 @@ describe('AuthorisationService', () => {
       service.requestAuthorisation();
 
       expect(httpMock.get).toHaveBeenCalledWith('api/issue-token', {});
-      expect(service.authorisationBearerToken).toEqual(
-        'Bearer test-auth-token'
-      );
+      expect(service.authorisationBearerToken).toEqual('test-auth-token');
     });
   });
 });

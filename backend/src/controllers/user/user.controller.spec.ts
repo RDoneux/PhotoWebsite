@@ -31,7 +31,7 @@ describe("user controller", () => {
         send: jest.fn(),
       };
       collections["user"] = {
-        find: jest.fn().mockReturnValue({ value: "test-value" }),
+        findOne: jest.fn().mockReturnValue({ value: "test-value" }),
       };
       await component.getUser(req, res);
       expect(res.status).toHaveBeenCalledWith(200);

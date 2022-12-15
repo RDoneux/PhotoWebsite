@@ -1,5 +1,4 @@
 import { HttpClientModule } from '@angular/common/http';
-import { NgZone } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -46,7 +45,6 @@ describe('ContactComponent', () => {
       ],
       providers: [
         { provide: ContactService, useValue: contactServiceMock },
-        // { provide: Router, useValue: routerMock },
         { provide: ModalService, useValue: modalServiceMock },
       ],
     }).compileComponents();
@@ -124,7 +122,7 @@ describe('ContactComponent', () => {
         message: 'test-message',
       });
     });
-    it('should reset all fields', () => {
+    it('should reset all fields', async () => {
       component.message = 'test-message';
       component.subject = 'test-subject';
       component.contactEmail = 'test-contact-email';
@@ -133,14 +131,14 @@ describe('ContactComponent', () => {
         of({ data: { status: '201' } })
       );
 
-      component.onSubmit();
+      await component.onSubmit();
 
       expect(component.message).toBe('');
       expect(component.subject).toBe('');
       expect(component.contactEmail).toBe('');
     });
 
-    it('should redirect to home', () => {
+    it('should redirect to home', async () => {
       component.message = 'test-message';
       component.subject = 'test-subject';
       component.contactEmail = 'test-contact-email';
@@ -150,12 +148,12 @@ describe('ContactComponent', () => {
       );
       spyOn(routerMock, 'navigate');
 
-      component.onSubmit();
+      await component.onSubmit();
 
       expect(routerMock.navigate).toHaveBeenCalledWith(['/home']);
     });
 
-    it('should display modal', () => {
+    it('should display modal', async () => {
       component.message = 'test-message';
       component.subject = 'test-subject';
       component.contactEmail = 'test-contact-email';
@@ -165,7 +163,7 @@ describe('ContactComponent', () => {
       );
       spyOn(modalServiceMock, 'createModal');
 
-      component.onSubmit();
+      await component.onSubmit();
       expect(modalServiceMock.createModal).toHaveBeenCalledWith(
         'Thank you for your message',
         'I will get back to you as soon as I can',
