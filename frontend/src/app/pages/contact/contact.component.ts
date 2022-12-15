@@ -31,30 +31,30 @@ export class ContactComponent {
     this.message = event;
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (!this.contactEmail || !this.subject || !this.message) return;
-    this.service
-      .postMessage({
-        contact_email: this.contactEmail,
-        subject: this.subject,
-        message: this.message,
-      })
-      .subscribe({
-        next: (response: any) => {
-          this.contactEmail = '';
-          this.subject = '';
-          this.message = '';
-          if (response.data.status === 201) {
-            this.router.navigate(['/home']);
-            this.modalService.createModal(
-              'Thank you for your message',
-              'I will get back to you as soon as I can',
-              true,
-              '',
-              'Close'
-            );
-          }
-        },
-      });
+    const postService = await this.service.postMessage({
+      contact_email: this.contactEmail,
+      subject: this.subject,
+      message: this.message,
+    });
+
+    postService.subscribe({
+      next: (response: any) => {
+        this.contactEmail = '';
+        this.subject = '';
+        this.message = '';
+        if (response.data.status === 201) {
+          this.router.navigate(['/home']);
+          this.modalService.createModal(
+            'Thank you for your message',
+            'I will get back to you as soon as I can',
+            true,
+            '',
+            'Close'
+          );
+        }
+      },
+    });
   }
 }

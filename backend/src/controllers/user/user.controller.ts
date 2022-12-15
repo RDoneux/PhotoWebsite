@@ -23,7 +23,7 @@ export class UserController implements Controller {
 
   getUser = async (request: Request, response: Response) => {
     try {
-      const user = (await collections[this.collection].find({})) as IUser;
+      const user = (await collections[this.collection].findOne({})) as IUser;
       response.status(200).send({ data: user });
     } catch (error: any) {
       Logger.error(error);
@@ -33,6 +33,7 @@ export class UserController implements Controller {
 
   patchUser = async (request: Request, response: Response) => {
     const user = new User(request.body).toObject();
+    delete user._id;
     try {
       const result = await collections[this.collection].replaceOne({}, user, {
         upsert: true,

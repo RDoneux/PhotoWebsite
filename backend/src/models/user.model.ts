@@ -1,3 +1,4 @@
+import { Document } from "mongodb";
 import { model, Schema } from "mongoose";
 
 export interface IUser extends Document {
