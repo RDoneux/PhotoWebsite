@@ -22,3 +22,9 @@ p {
   color: $text-colour;
   font-family: $font-family;
 }
+
+router-outlet~* {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}

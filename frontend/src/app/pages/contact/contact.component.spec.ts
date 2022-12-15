@@ -1,14 +1,19 @@
 import { HttpClientModule } from '@angular/common/http';
+import { NgZone } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { ModalService } from 'src/app/common/modal/modal.service';
 import { PageTitleComponent } from 'src/app/common/page-title/page-title.component';
 import { PageTitleModule } from 'src/app/common/page-title/page-title.module';
 import { ButtonComponent } from 'src/app/user-interface/button/button.component';
+import { NavBarModule } from 'src/app/user-interface/nav-bar/nav-bar.module';
 import { TextAreaComponent } from 'src/app/user-interface/text-area/text-area.component';
 import { TextInputComponent } from 'src/app/user-interface/text-input/text-input.component';
 import { UserInterfaceModule } from 'src/app/user-interface/user-interface.module';
+import { HomeComponent } from '../home/home.component';
+import { HomeModule } from '../home/home.module';
 
 import { ContactComponent } from './contact.component';
 import { ContactService } from './contact.service';
@@ -16,7 +21,7 @@ import { ContactService } from './contact.service';
 describe('ContactComponent', () => {
   let component: ContactComponent;
   let contactServiceMock: any = { postMessage: () => {} };
-  let routerMock: any = { navigate: () => {} };
+  let routerMock: Router;
   let modalServiceMock: any = { createModal: () => {} };
   let fixture: ComponentFixture<ContactComponent>;
 
@@ -29,15 +34,25 @@ describe('ContactComponent', () => {
         TextAreaComponent,
         ButtonComponent,
       ],
-      imports: [HttpClientModule, PageTitleModule, UserInterfaceModule],
+      imports: [
+        HttpClientModule,
+        PageTitleModule,
+        UserInterfaceModule,
+        HomeModule,
+        NavBarModule,
+        RouterTestingModule.withRoutes([
+          { path: 'home', component: HomeComponent },
+        ]),
+      ],
       providers: [
         { provide: ContactService, useValue: contactServiceMock },
-        { provide: Router, useValue: routerMock },
+        // { provide: Router, useValue: routerMock },
         { provide: ModalService, useValue: modalServiceMock },
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ContactComponent);
+    routerMock = TestBed.inject(Router);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -136,10 +151,11 @@ describe('ContactComponent', () => {
       spyOn(routerMock, 'navigate');
 
       component.onSubmit();
+
       expect(routerMock.navigate).toHaveBeenCalledWith(['/home']);
     });
 
-    it('should redirect to home', () => {
+    it('should display modal', () => {
       component.message = 'test-message';
       component.subject = 'test-subject';
       component.contactEmail = 'test-contact-email';

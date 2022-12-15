@@ -1,8 +1,7 @@
 <!-- <input type="file" multiple (change)="uploadFile($event.target)" /> -->
 <div class="app-wrapper">
-  <app-nav-bar></app-nav-bar>
   <app-modal></app-modal>
-  <div>
-    <router-outlet></router-outlet>
+  <div [@fadeAnimation]="outlet.isActivated ? outlet.activatedRoute : ''">
+    <router-outlet #outlet="outlet"></router-outlet>
   </div>
 </div>

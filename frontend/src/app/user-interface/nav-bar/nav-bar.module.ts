@@ -7,6 +7,6 @@ import { NavBarBreakComponent } from './nav-bar-break/nav-bar-break.component';
 @NgModule({
   declarations: [NavBarComponent, NavBarBreakComponent],
   imports: [CommonModule, RouterModule],
-  exports: [NavBarComponent],
+  exports: [NavBarComponent, NavBarBreakComponent],
 })
 export class NavBarModule {}

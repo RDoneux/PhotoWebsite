@@ -1,23 +1,26 @@
 <div class="contact__page-wrapper">
-  <app-page-title>Contact</app-page-title>
-  <p class="contact__response-info">
-    I will try to respond within 2 working days, but if you don't hear from me,
-    you can also contact me on social media.
-  </p>
-  <app-text-input
-    [label]="'Contact Email'"
-    [value]="contactEmail"
-    (valueChanged)="onContactEmailChange($event)"
-  ></app-text-input>
-  <app-text-input
-    [label]="'Subject'"
-    [value]="subject"
-    (valueChanged)="onSubjectChange($event)"
-  ></app-text-input>
-  <app-text-area
-    [label]="'Message'"
-    [value]="message"
-    (valueChanged)="onMessageChange($event)"
-  ></app-text-area>
-  <app-button [label]="'Submit'" (submit)="onSubmit()"></app-button>
+  <app-nav-bar></app-nav-bar>
+  <div class="contact__content-wrapper">
+    <app-page-title>Contact</app-page-title>
+    <p class="contact__response-info">
+      I will try to respond within 2 working days, but if you don't hear from
+      me, you can also contact me on social media.
+    </p>
+    <app-text-input
+      [label]="'Contact Email'"
+      [value]="contactEmail"
+      (valueChanged)="onContactEmailChange($event)"
+    ></app-text-input>
+    <app-text-input
+      [label]="'Subject'"
+      [value]="subject"
+      (valueChanged)="onSubjectChange($event)"
+    ></app-text-input>
+    <app-text-area
+      [label]="'Message'"
+      [value]="message"
+      (valueChanged)="onMessageChange($event)"
+    ></app-text-area>
+    <app-button [label]="'Submit'" (submit)="onSubmit()"></app-button>
+  </div>
 </div>

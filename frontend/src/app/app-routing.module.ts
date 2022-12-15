@@ -36,6 +36,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/gallery/gallery.module').then((m) => m.GalleryModule),
   },
+  { path: '**', redirectTo: '/home' },
 ];
 
 @NgModule({
