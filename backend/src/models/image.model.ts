@@ -1,5 +1,5 @@
 import { Document } from "mongodb";
-import { model, ObjectId, Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 export interface IImage extends Document {
   title: string;
   author: string;
