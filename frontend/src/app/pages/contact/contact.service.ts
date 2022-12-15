@@ -12,10 +12,12 @@ export class ContactService {
     private authorisationService: AuthorisationService
   ) {}
 
-  postMessage(message: Message) {
+  async postMessage(message: Message) {
+    const authToken = await this.authorisationService.getBearerToken();
+
     return this.httpClient.post('api/messages', message, {
       headers: new HttpHeaders({
-        Authorization: this.authorisationService.authorisationBearerToken,
+        Authorization: authToken,
       }),
     });
   }

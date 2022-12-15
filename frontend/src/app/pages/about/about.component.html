@@ -1,2 +1,11 @@
-<app-nav-bar></app-nav-bar>
-<p>about works!</p>
+<div class="about__page-wrapper">
+  <app-nav-bar></app-nav-bar>
+  <div class="about__content-wrapper">
+    <app-page-title>About</app-page-title>
+
+    <p class="about__paragraph">
+      <img class="about__image" [src]="imageUrl" referrerpolicy="no-referrer" />
+      {{ description }}
+    </p>
+  </div>
+</div>

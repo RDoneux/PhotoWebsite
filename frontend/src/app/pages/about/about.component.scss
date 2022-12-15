@@ -1,0 +1,49 @@
+@import "index";
+
+.about__page-wrapper {
+  padding: 0 1rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .about__content-wrapper {
+    align-items: center;
+    // height: 100%;
+    display: flex;
+    flex-direction: column;
+    .about__paragraph {
+      height: calc(100vh - 104px);
+      margin: 0;
+      overflow-y: auto;
+      padding-right: 1rem;
+      .about__image {
+        border-radius: 50%;
+        width: 50vw;
+        height: 50vw;
+        object-fit: cover;
+        float: left;
+        margin-right: 1.5rem;
+        shape-outside: circle();
+      }
+    }
+  }
+}
+
+@media screen and (max-height: $tablet) {
+  .about__page-wrapper {
+    padding: 1rem;
+    flex-direction: row;
+    .about__content-wrapper {
+      .about__paragraph {
+        height: 100vh;
+        .about__image {
+          width: 30vw;
+          height: 30vw;
+        }
+      }
+    }
+  }
+  app-page-title {
+    display: none;
+  }
+}
