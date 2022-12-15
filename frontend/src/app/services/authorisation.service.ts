@@ -18,10 +18,15 @@ export class AuthorisationService {
 
   async getBearerToken(): Promise<string> {
     return new Promise((resolve, reject) => {
+      var count = 0;
       const interval = setInterval(() => {
+        count++;
         if (this.authorisationBearerToken) {
           resolve('Bearer ' + this.authorisationBearerToken);
           clearTimeout(interval);
+        }
+        if (count > 1000) {
+          clearTimeout(interval), reject();
         }
       }, 100);
     });

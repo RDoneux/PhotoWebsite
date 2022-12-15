@@ -8,13 +8,17 @@ import { AboutService } from './about.service';
   styleUrls: ['./about.component.scss'],
 })
 export class AboutComponent implements OnInit {
+  description: string | undefined = undefined;
+  imageUrl: string | undefined = undefined;
+
   constructor(private service: AboutService) {}
 
   async ngOnInit() {
     const userData$ = await this.service.getUserData();
     userData$.subscribe({
-      next: (response) => {
-        console.log(response);
+      next: (response: any) => {
+        this.description = response.data.description;
+        this.imageUrl = response.data.imageUrl;
       },
     });
   }
