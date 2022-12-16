@@ -1,2 +1,7 @@
-<app-nav-bar></app-nav-bar>
-<p>collections works!</p>
+<div>
+  <app-nav-bar></app-nav-bar>
+  <app-page-title>Collections</app-page-title>
+  <ng-container *ngIf="collections">
+    <h5 class="collections__count">{{ collections.length }} items</h5>
+  </ng-container>
+</div>
