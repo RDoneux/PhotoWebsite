@@ -1,0 +1,43 @@
+@import "index";
+
+.collections__page-wrapper {
+  padding: 0 1rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  app-page-title {
+    line-height: $font-size-medium;
+    margin-top: 1rem;
+  }
+
+  .collections__count {
+    text-align: center;
+    margin: 0;
+  }
+
+  .collections__collection-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    height: calc(100vh - 104px);
+    overflow-y: auto;
+  }
+}
+
+@media screen and (max-height: $tablet) {
+  .collections__page-wrapper {
+    padding: 1rem;
+    flex-direction: row;
+    .collections__count {
+      display: none;
+    }
+    .collections__collection-wrapper {
+      height: 100%;
+    }
+  }
+  app-page-title {
+    display: none;
+  }
+}
