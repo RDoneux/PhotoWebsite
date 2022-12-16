@@ -13,7 +13,6 @@ export class GalleryComponent implements OnInit {
     this.activiatedRoute.queryParams.subscribe({
       next: (response) => {
         const id = response['id'];
-        console.log(id);
       },
     });
   }
