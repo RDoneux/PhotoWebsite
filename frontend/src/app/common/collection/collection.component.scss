@@ -1,0 +1,29 @@
+.collection__container {
+  width: 8rem;
+  height: 14rem;
+  display: flex;
+  flex-direction: column;
+  .collection__image {
+    object-fit: cover;
+    width: 100%;
+    border-radius: 5px;
+
+    flex: 1 1 auto;
+
+    filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.404));
+  }
+
+  .collection__title,
+  .collection__image-count {
+    margin: 0;
+    font-weight: 100;
+    text-align: center;
+  }
+
+  .collection__title {
+    line-height:2rem;
+  }
+  .collection__image-count {
+    line-height: 1rem;
+  }
+}

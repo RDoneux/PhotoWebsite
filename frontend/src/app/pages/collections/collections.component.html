@@ -1,7 +1,15 @@
-<div>
+<div class="collections__page-wrapper">
   <app-nav-bar></app-nav-bar>
   <app-page-title>Collections</app-page-title>
   <ng-container *ngIf="collections">
     <h5 class="collections__count">{{ collections.length }} items</h5>
   </ng-container>
+
+  <app-collection
+    [imageUrl]="
+      'https://lh3.googleusercontent.com/d/1OxTe7jS0sX_plnvL9mHGK1nucSvLvqSo'
+    "
+    [title]="'Test Title'"
+    [imageCount]="34"
+  ></app-collection>
 </div>

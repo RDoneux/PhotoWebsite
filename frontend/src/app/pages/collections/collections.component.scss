@@ -1,11 +1,18 @@
-@import 'index';
+@import "index";
 
-app-page-title {
+.collections__page-wrapper {
+  padding: 0 1rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  app-page-title {
     line-height: $font-size-medium;
-    margin-top: 1rem; 
-}
+    margin-top: 1rem;
+  }
 
-.collections__count{
+  .collections__count {
     text-align: center;
     margin: 0;
+  }
 }
