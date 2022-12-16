@@ -1,10 +1,12 @@
+@import "index";
+
 .collection__container {
   width: 8rem;
   height: 14rem;
   display: flex;
   flex-direction: column;
 
-  margin: .5rem 1rem 1rem 0;
+  margin: 0.5rem 1rem 0 1rem;
   .collection__image {
     object-fit: cover;
     width: 100%;

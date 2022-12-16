@@ -20,9 +20,24 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    align-items: center;
     justify-content: center;
     height: calc(100vh - 104px);
     overflow-y: auto;
+  }
+}
+
+@media screen and (max-height: $tablet) {
+  .collections__page-wrapper {
+    padding: 1rem;
+    flex-direction: row;
+    .collections__count {
+      display: none;
+    }
+    .collections__collection-wrapper {
+      height: 100%;
+    }
+  }
+  app-page-title {
+    display: none;
   }
 }
