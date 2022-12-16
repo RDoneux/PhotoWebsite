@@ -3,6 +3,8 @@
   height: 14rem;
   display: flex;
   flex-direction: column;
+
+  margin: .5rem 1rem 1rem 0;
   .collection__image {
     object-fit: cover;
     width: 100%;
@@ -21,7 +23,7 @@
   }
 
   .collection__title {
-    line-height:2rem;
+    line-height: 2rem;
   }
   .collection__image-count {
     line-height: 1rem;

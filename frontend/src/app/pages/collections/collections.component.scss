@@ -15,4 +15,14 @@
     text-align: center;
     margin: 0;
   }
+
+  .collections__collection-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 104px);
+    overflow-y: auto;
+  }
 }
