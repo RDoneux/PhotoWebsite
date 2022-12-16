@@ -7,6 +7,7 @@
   <div class="collections__collection-wrapper">
     <app-collection
       *ngFor="let collection of collections"
+      [id]="collection._id"
       [imageUrl]="
         'https://lh3.googleusercontent.com/d/1OxTe7jS0sX_plnvL9mHGK1nucSvLvqSo'
       "

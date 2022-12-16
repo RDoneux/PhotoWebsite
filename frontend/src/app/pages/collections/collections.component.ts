@@ -15,7 +15,6 @@ export class CollectionsComponent implements OnInit {
     const collectionsRequest = await this.service.getCollections();
     collectionsRequest.subscribe({
       next: (response: any) => {
-        console.log(response.data)
         this.collections = response.data;
       },
     });
