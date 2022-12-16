@@ -1,4 +1,9 @@
 <div>
   <app-nav-bar></app-nav-bar>
   <app-page-title>Gallery</app-page-title>
+  <img
+    *ngFor="let image of images"
+    [src]="image.url"
+    referrerpolicy="no-referrer"
+  />
 </div>
