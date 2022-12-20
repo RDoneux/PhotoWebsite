@@ -1,9 +1,11 @@
 <span *ngIf="images" class="image-slider__container">
-  <img
+  <div
     class="image-slider__primary-image"
-    [src]="images[targetImageIndex].url"
+    [ngStyle]="{
+      backgroundImage: 'url(' + images[targetImageIndex].url + ')'
+    }"
     referrerpolicy="no-referrer"
-  />
+  ></div>
   <div class="image-slider__primary-image-information">
     <h3 class="image-slider__primary-image-title">
       {{ images[targetImageIndex].title }}

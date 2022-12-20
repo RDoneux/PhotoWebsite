@@ -18,7 +18,11 @@ export class ImageSliderComponent {
     if (!this.images) return;
     this.targetImageIndex = event.index;
     this.desiredRotation =
-      -(360 / (this.images.length + 2 <= this.minImageNumber ? this.minImageNumber : this.images.length + 2)) *
-      event.index;
+      -(
+        360 /
+        (this.images.length + 2 <= this.minImageNumber
+          ? this.minImageNumber
+          : this.images.length + 2)
+      ) * event.index;
   }
 }

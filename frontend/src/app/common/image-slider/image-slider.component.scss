@@ -11,10 +11,21 @@
   width: 100%;
 
   overflow: hidden;
+
   .image-slider__primary-image {
-    max-height: 60%;
+    display: inline-block;
+    flex: 0.8 0 auto;
+    width: 100%;
+    position: relative;
+
+    position: relative;
+
     object-fit: cover;
-    flex: 0.2 0 auto;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    transition: background-image 0.5s ease-out;
   }
 
   .image-slider__primary-image-information {
@@ -36,7 +47,7 @@
   }
 
   .image-slider__gallery-container {
-    flex: 0.8 0 auto;
+    flex: 0.2 0 auto;
     margin-top: 2rem;
     width: 100px;
     transform-style: preserve-3d;
