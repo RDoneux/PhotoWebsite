@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthorisationService } from 'src/app/services/authorisation.service';
+import { Image } from './gallery.model';
 
 @Component({
   selector: 'app-gallery',
@@ -9,7 +10,7 @@ import { AuthorisationService } from 'src/app/services/authorisation.service';
   styleUrls: ['./gallery.component.scss'],
 })
 export class GalleryComponent implements OnInit {
-  images: any;
+  images: Image[] | undefined = undefined;
 
   constructor(
     private activiatedRoute: ActivatedRoute,

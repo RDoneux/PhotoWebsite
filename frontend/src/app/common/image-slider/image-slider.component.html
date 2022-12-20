@@ -1,0 +1,37 @@
+<span *ngIf="images" class="image-slider__container">
+  <img
+    class="image-slider__primary-image"
+    [src]="images[targetImageIndex].url"
+    referrerpolicy="no-referrer"
+  />
+  <div class="image-slider__primary-image-information">
+    <h3 class="image-slider__primary-image-title">
+      {{ images[targetImageIndex].title }}
+    </h3>
+    <span
+      ><h5>{{ images[targetImageIndex].author }}</h5>
+      <h5>{{ images[targetImageIndex].dateTaken }}</h5></span
+    >
+  </div>
+  <div
+    class="image-slider__gallery-container"
+    style="--desired-rotation: {{ desiredRotation }}deg"
+  >
+    <app-image-slider-image
+      *ngFor="let image of images; let i = index"
+      class="image-slider__gallery-image"
+      style="--i: {{ i }}; --image-rotation: {{
+        360 /
+          (images.length + 2 <= minImageNumber
+            ? minImageNumber
+            : images.length + 2)
+      }}deg;  --image-number: {{
+        images.length + 2 <= minImageNumber ? minImageNumber : images.length + 2
+      }}px"
+      [src]="image.url"
+      [index]="i"
+      [targetImageIndex]="targetImageIndex"
+      (clicked)="imageClicked($event)"
+    ></app-image-slider-image>
+  </div>
+</span>

@@ -1,9 +1,5 @@
-<div>
+<div class="gallery__page-wrapper">
   <app-nav-bar></app-nav-bar>
   <app-page-title>Gallery</app-page-title>
-  <img
-    *ngFor="let image of images"
-    [src]="image.url"
-    referrerpolicy="no-referrer"
-  />
+  <app-image-slider style="height: calc(100vh - 104px)" [images]="images"></app-image-slider>
 </div>

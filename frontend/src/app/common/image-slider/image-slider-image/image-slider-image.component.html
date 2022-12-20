@@ -1,0 +1,13 @@
+  <img
+    *ngIf="index !== undefined && targetImageIndex != undefined"
+    #galleryImage
+    class="gallery-image"
+    [ngClass]="{
+      'primary-image': index === targetImageIndex,
+      'secondary-image':
+        index === targetImageIndex - 1 || index === targetImageIndex + 1
+    }"
+    [src]="src"
+    (click)="onClick()"
+    referrerpolicy="no-referrer"
+  />
