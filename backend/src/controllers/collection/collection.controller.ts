@@ -96,7 +96,7 @@ export class CollectionController implements Controller {
   postCollection = async (request: Request, response: Response) => {
     try {
       const result = await collections[this.collection].insertOne(
-        await Collection.create(request.body)
+        new Collection(request.body)
       );
 
       result
