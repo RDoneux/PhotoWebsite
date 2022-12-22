@@ -7,6 +7,7 @@
     "test": "npx jest",
     "start": "nodemon src/index.ts",
     "build": "npm run test && esbuild src/index.ts --bundle --minify --platform=node --outfile=dist/index.min.js && cp -r src/pages dist | true && cp -r fonts dist | true && cp .env dist | true",
+    "quickBuild": "esbuild src/index.ts --bundle --minify --platform=node --outfile=dist/index.min.js && cp -r src/pages dist | true && cp -r fonts dist | true && cp .env dist | true",
     "cleanBuild": "rm -rf coverage && rm -rf dist && rm -rf node_modules && rm -f package-lock.json && npm install && npm run build",
     "startDB:linux": "sudo systemctl start mongod"
   },
