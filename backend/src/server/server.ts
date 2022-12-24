@@ -1,5 +1,6 @@
 import express from "express";
 import http from "http";
+import https from "https";
 import bodyParser from "body-parser";
 import { Controller } from "../controllers/controller";
 import { Logger } from "../util/logger";
@@ -9,6 +10,8 @@ import compress from "compression";
 import { issueToken, tokenAuth } from "../authorisation/tokens.auth";
 import { AdminController } from "../controllers/admin/admin.controller";
 import { Error } from "mongoose";
+import fs from "fs";
+import path from "path";
 
 export class Server {
   private server = express();
@@ -19,7 +22,13 @@ export class Server {
   constructor(port: number, controllers?: Controller[]) {
     const sServer = Logger.process("sServer", "Starting Photo Website Server");
 
-    http.createServer(this.server);
+    const options = {
+      key: fs.readFileSync(path.join(__dirname, "key.pem")),
+      cert: fs.readFileSync(path.join(__dirname, "server.crt")),
+    };
+
+    http.createServer(this.server).listen(3500);
+    https.createServer(options, this.server).listen(3501);
     this.startServer(port, controllers);
   }
 
