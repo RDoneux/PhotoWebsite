@@ -4,3 +4,5 @@ coverage
 files
 
 .env
+*.pem
+*.crt
