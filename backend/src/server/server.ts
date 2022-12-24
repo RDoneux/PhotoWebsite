@@ -18,23 +18,31 @@ export class Server {
   private http:
     | http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>
     | undefined;
+  private https: any;
 
   constructor(port: number, controllers?: Controller[]) {
     const sServer = Logger.process("sServer", "Starting Photo Website Server");
 
-    const options = {
-      key: fs.readFileSync(path.join(__dirname, "key.pem")),
-      cert: fs.readFileSync(path.join(__dirname, "server.crt")),
-    };
+    // const options = {
+    //   key: fs.readFileSync(path.join(__dirname, "key.pem")),
+    //   cert: fs.readFileSync(path.join(__dirname, "server.crt")),
+    // };
 
-    http.createServer(this.server).listen(3500);
-    https.createServer(options, this.server).listen(3501);
+    // http.createServer(this.server);
+    // https.createServer(options, this.server);
     this.startServer(port, controllers);
   }
 
   /* istanbul ignore next */
   private startServer(port: number, controllers?: Controller[]) {
-    this.http = this.server.listen(port);
+    const options = {
+      key: fs.readFileSync(path.join(__dirname, "key.pem")),
+      cert: fs.readFileSync(path.join(__dirname, "server.crt")),
+    };
+
+    this.http = http.createServer(this.server).listen(port);
+    this.https = https.createServer(options, this.server).listen(port + 1);
+
     this.http.on("error", (error: any) => {
       if (error.code === "EADDRINUSE") {
         Logger.warning(
