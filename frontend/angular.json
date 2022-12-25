@@ -71,7 +71,8 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "frontend:build:production"
+              "browserTarget": "frontend:build:production",
+              "proxyConfig": "src/proxy.config.json"
             },
             "development": {
               "browserTarget": "frontend:build:development"
@@ -103,7 +104,10 @@
           }
         },
         "deploy": {
-          "builder": "angular-cli-ghpages:deploy"
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "proxyConfig": "src/proxy.config.json"
+          }
         }
       }
     }
