@@ -13,15 +13,19 @@ jobs:
       - name: git-checkout
         uses: actions/checkout@v2
 
-      - name: Install all dependencies
+      - name: Install frontend dependencies
         run: npm install
         working-directory: ./frontend
+        
+      - name: Install backend dependencies
         run: npm install
         working-directory: ./backend
 
-      - name: Build
+      - name: Build frontend
         run: npm run quickBuild
         working-directory: ./frontend
+      
+      - name: Build backend
         run: npm run quickBuild
         working-directory: ./backend
     
