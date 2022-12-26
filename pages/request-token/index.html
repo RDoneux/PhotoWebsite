@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="./request-token.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="./request-token.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="background-image"></div>
+    <div class="background-fade"></div>
+    <div class="credentials-wrapper">
+      <h1 class="title">Generate Token</h1>
+      <span #myCheck class="title-description"
+        >Generate a new API access token</span
+      >
+      <input id="username" class="input" type="text" placeholder="Username" />
+      <input
+        id="password"
+        class="input"
+        type="password"
+        placeholder="Password"
+      />
+      <div class="input-half-wrapper">
+        <input
+          id="title"
+          class="input half"
+          type="text"
+          placeholder="Token title"
+        />
+        <input
+          id="expiry"
+          class="input half"
+          type="number"
+          placeholder="Token Expiry (days)"
+        />
+      </div>
+      <textarea
+        id="privilages"
+        class="text-area"
+        placeholder="List privilages separated with a colon. e.g. visitor:admin"
+      ></textarea>
+      <input class="button" type="button" onclick="testing()" value="Submit" />
+      <span id="output" class="token"></span>
+    </div>
+  </body>
+</html>
