@@ -8,7 +8,7 @@ import { MessageController } from "./controllers/message/message.controller";
 import { UserController } from "./controllers/user/user.controller";
 
 dotenv.config();
-console.log(figlet.textSync("Photo Website"));
+// console.log(figlet.textSync("Photo Website"));
 new Server(Number(process.env.PORT ?? 3000), [
   new TestController(),
   new ImageController(),

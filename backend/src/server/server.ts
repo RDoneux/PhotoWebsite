@@ -36,8 +36,8 @@ export class Server {
   /* istanbul ignore next */
   private startServer(port: number, controllers?: Controller[]) {
     const options = {
-      key: fs.readFileSync(path.join(__dirname, "key.pem")),
-      cert: fs.readFileSync(path.join(__dirname, "server.crt")),
+      key: fs.readFileSync(path.join(__dirname, "client-key.pem")),
+      cert: fs.readFileSync(path.join(__dirname, "client-cert.pem")),
     };
 
     this.http = http.createServer(this.server).listen(port);

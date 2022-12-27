@@ -35,3 +35,7 @@ Before you can run the project you will need to create a .env file and populate 
 create a new post request which includes the following JSON body ``` {title: <memorable title>, privilages: "['visitor', 'admin'], expiresIn: <days - optional>} ```
 
 add basic authentication with username and password (saved on onepass)
+
+### generating a client cert and client key
+
+openssl genrsa -out client-key.pem 2048 && openssl req -new -key client-key.pem -out client.csr && openssl x509 -req -in client.csr -signkey client-key.pem -out client-cert.pem
