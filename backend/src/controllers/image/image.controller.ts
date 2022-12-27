@@ -8,7 +8,6 @@ import { ObjectId } from "mongodb";
 import { ICollection } from "../../models/collection.model";
 import Image from "../../models/image.model";
 import { imageUpload, uploadToGoogleDrive } from "../../services/image.service";
-import { ClientRequest } from "http";
 
 export class ImageController implements Controller {
   collection: string = "image";

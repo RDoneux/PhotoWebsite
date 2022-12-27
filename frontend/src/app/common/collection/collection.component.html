@@ -1,5 +1,9 @@
 <div class="collection__container" (click)="navigateToCollectionGallery()">
-  <img class="collection__image" [src]="imageUrl" />
+  <img
+    class="collection__image"
+    [src]="imageUrl"
+    referrerpolicy="no-referrer"
+  />
   <h3 class="collection__title">{{ title }}</h3>
   <h5 class="collection__image-count">{{ imageCount }} images</h5>
 </div>
