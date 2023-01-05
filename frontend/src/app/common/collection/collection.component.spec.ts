@@ -4,6 +4,7 @@ import { CollectionComponent } from './collection.component';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { GalleryComponent } from 'src/app/pages/gallery/gallery.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('CollectionComponent', () => {
   let component: CollectionComponent;
@@ -14,6 +15,7 @@ describe('CollectionComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [CollectionComponent],
       imports: [
+        HttpClientModule,
         RouterTestingModule.withRoutes([
           { path: 'gallery', component: GalleryComponent },
         ]),

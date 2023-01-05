@@ -39,3 +39,7 @@ add basic authentication with username and password (saved on onepass)
 ### generating a client cert and client key
 
 openssl genrsa -out client-key.pem 2048 && openssl req -new -key client-key.pem -out client.csr && openssl x509 -req -in client.csr -signkey client-key.pem -out client-cert.pem
+
+### edit server config file
+
+sudo nano /etc/nginx/sites-available/default

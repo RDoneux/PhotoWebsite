@@ -1,7 +1,8 @@
 <div @fadeIn class="home__container">
   <img
+    *ngIf="backgroundUrl"
     class="home__background-image"
-    src="https://lh3.googleusercontent.com/d/17MHWFkMsoDXPJGZRB-XA_RuIXt9FMv9i"
+    [src]="backgroundUrl"
     referrerpolicy="no-referrer"
   />
   <!-- <app-nav-bar style="z-index: 5"></app-nav-bar> -->

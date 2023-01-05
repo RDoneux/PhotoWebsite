@@ -3,13 +3,13 @@ import { Schema, model, ObjectId } from "mongoose";
 
 export interface ICollection extends Document {
   images: ObjectId[];
-  imageUrl: string;
+  imageId: string;
   title: string;
 }
 
 export const CollectionSchema: Schema = new Schema({
   images: [Schema.Types.ObjectId],
-  imageUrl: String,
+  imageId: String,
   title: String,
 });
 

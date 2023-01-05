@@ -22,26 +22,27 @@ export class Server {
 
   constructor(port: number, controllers?: Controller[]) {
     const sServer = Logger.process("sServer", "Starting Photo Website Server");
-
-    // const options = {
-    //   key: fs.readFileSync(path.join(__dirname, "key.pem")),
-    //   cert: fs.readFileSync(path.join(__dirname, "server.crt")),
-    // };
-
-    // http.createServer(this.server);
-    // https.createServer(options, this.server);
     this.startServer(port, controllers);
   }
 
   /* istanbul ignore next */
   private startServer(port: number, controllers?: Controller[]) {
-    const options = {
-      key: fs.readFileSync(path.join(__dirname, "client-key.pem")),
-      cert: fs.readFileSync(path.join(__dirname, "client-cert.pem")),
-    };
+    if (
+      fs.existsSync(path.join(__dirname, "client-key.pem")) &&
+      fs.existsSync(path.join(__dirname, "client-cert.pem"))
+    ) {
+      const options = {
+        key: fs.readFileSync(path.join(__dirname, "client-key.pem")),
+        cert: fs.readFileSync(path.join(__dirname, "client-cert.pem")),
+      };
+      this.https = https.createServer(options, this.server).listen(port + 1);
+    } else {
+      Logger.warning(
+        "Unable to start HTTPS server. No client-key and/or client-cert"
+      );
+    }
 
     this.http = http.createServer(this.server).listen(port);
-    this.https = https.createServer(options, this.server).listen(port + 1);
 
     this.http.on("error", (error: any) => {
       if (error.code === "EADDRINUSE") {

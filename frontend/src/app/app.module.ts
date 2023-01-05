@@ -23,6 +23,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 })
 export class AppModule {
   constructor(private authorisationService: AuthorisationService) {
-    authorisationService.requestAuthorisation();
+    this.authorisationService.requestAuthorisation();
   }
 }
