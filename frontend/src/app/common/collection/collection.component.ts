@@ -31,7 +31,6 @@ export class CollectionComponent implements OnInit {
       .subscribe({
         next: (response:any) => {
           this.coverUrl = response.data.url
-          console.log(response);
         },
       });
   }

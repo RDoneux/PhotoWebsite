@@ -11,10 +11,9 @@ describe('HomeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HomeComponent ],
-      imports: [NavBarModule, BrowserAnimationsModule, RouterTestingModule]
-    })
-    .compileComponents();
+      declarations: [HomeComponent],
+      imports: [NavBarModule, BrowserAnimationsModule, RouterTestingModule],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
@@ -23,5 +22,16 @@ describe('HomeComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('setUrl', () => {
+    it('should set background url', () => {
+      component.setUrl('test-url');
+      expect(component.backgroundUrl).toEqual('test-url');
+    });
+    it('should set background url to default if none given', () => {
+      component.setUrl('');
+      expect(component.backgroundUrl).toEqual('/assets/home-default.jpg');
+    });
   });
 });

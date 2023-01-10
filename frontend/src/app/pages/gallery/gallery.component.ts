@@ -10,6 +10,7 @@ import { Image } from './gallery.model';
   styleUrls: ['./gallery.component.scss'],
 })
 export class GalleryComponent implements OnInit {
+
   images: Image[] | undefined = undefined;
 
   constructor(
@@ -18,7 +19,7 @@ export class GalleryComponent implements OnInit {
     private authorisationService: AuthorisationService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.activiatedRoute.queryParams.subscribe({
       next: async (response) => {
         const id = response['id'];
