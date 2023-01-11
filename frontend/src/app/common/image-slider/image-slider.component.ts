@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Image } from 'src/app/pages/gallery/gallery.model';
 import { GalleryOffsetInformation } from './image-slider.model';
 

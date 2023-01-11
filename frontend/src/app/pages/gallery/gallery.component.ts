@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AuthorisationService } from 'src/app/services/authorisation.service';
 import { Image } from './gallery.model';
 
@@ -20,20 +20,20 @@ export class GalleryComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.activiatedRoute.queryParams.subscribe({
-      next: async (response) => {
-        const id = response['id'];
-        const authToken = await this.authorisationService.getBearerToken();
-        this.httpClient
-          .get(`api/collections/${id}/images`, {
-            headers: { Authorization: authToken },
-          })
-          .subscribe({
-            next: (response: any) => {
-              this.images = response.data.images;
-            },
-          });
-      },
-    });
+      this.activiatedRoute.queryParams.subscribe({
+        next: async (response) => {
+          const id = response['id'];
+          const authToken = await this.authorisationService.getBearerToken();
+          this.httpClient
+            .get(`api/collections/${id}/images`, {
+              headers: { Authorization: authToken },
+            })
+            .subscribe({
+              next: (response: any) => {
+                this.images = response.data.images;
+              },
+            });
+        },
+      });
   }
 }

@@ -14,7 +14,7 @@ import { GalleryOffsetInformation } from '../image-slider.model';
   templateUrl: './image-slider-image.component.html',
   styleUrls: ['./image-slider-image.component.scss'],
 })
-export class ImageSliderImageComponent implements OnInit {
+export class ImageSliderImageComponent {
   @Input() src: string | undefined = undefined;
   @Input() index: number | undefined = undefined;
   @Input() targetImageIndex: number | undefined = undefined;
@@ -26,25 +26,7 @@ export class ImageSliderImageComponent implements OnInit {
 
   imageStatus: 'primary' | 'secondary' | 'terchary' = 'terchary';
 
-  ngOnInit(): void {
-    // if (!this.index || !this.targetImageIndex) return;
-    // if (this.index === this.targetImageIndex) {
-    //   this.imageStatus = 'primary';
-    // } else if (
-    //   this.index === this.targetImageIndex - 1 ||
-    //   this.index === this.targetImageIndex + 1
-    // ) {
-    //   this.imageStatus = 'secondary';
-    // }
-  }
-
   onClick() {
-    console.log(this.index, ' @ ', this.galleryImage);
-
-    // if (!this.index || !this.galleryImage) {
-    //   console.error('index or width is undefined');
-    //   return;
-    // }
     this.clicked.emit({
       index: this.index ?? 0,
       width: this.galleryImage?.nativeElement.width,
