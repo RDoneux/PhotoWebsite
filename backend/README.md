@@ -43,3 +43,8 @@ openssl genrsa -out client-key.pem 2048 && openssl req -new -key client-key.pem 
 ### edit server config file
 
 sudo nano /etc/nginx/sites-available/default
+
+### restart server code after pull
+
+sudo systemctl reload nginx
+sudo pm2 restart 0
