@@ -1,13 +1,27 @@
-@import 'index';
+@import "index";
 
 :host {
-    display: block;
+  display: block;
 }
 
-.page-title__wrapper{
-    font-family: $font-family;
-    font-size: $font-size-large;
+.page-title__wrapper {
+  font-family: $font-family;
+  font-size: $font-size-large;
 
-    display: block;
-    text-align: center;
+  display: block;
+  text-align: center;
+
+  .page-title__content-wrapper {
+    display: inline-block;
+    width: 90%;
+  }
+
+  .material-symbols-outlined {
+    display: inline-block;
+    width: 10%;
+    &:hover {
+      cursor: pointer;
+      font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 48;
+    }
+  }
 }

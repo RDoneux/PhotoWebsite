@@ -8,6 +8,7 @@ import { NavBarModule } from './user-interface/nav-bar/nav-bar.module';
 import { AuthorisationService } from './services/authorisation.service';
 import { ModalModule } from './common/modal/modal.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AdminDashboardGuard } from './guards/admin-dashboard.guard';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,7 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NavBarModule,
     ModalModule,
   ],
-  providers: [],
+  providers: [AdminDashboardGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {
