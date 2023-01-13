@@ -45,6 +45,13 @@ const routes: Routes = [
         (m) => m.AdminDashboardModule
       ),
   },
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./pages/admin-login/admin-login.module').then(
+        (m) => m.AdminLoginModule
+      ),
+  },
   { path: '**', redirectTo: '/home' },
 ];
 

@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { AdminDashboardRoutingModule } from './admin-dashboard-routing.module';
 import { AdminDashboardComponent } from './admin-dashboard.component';
-import { RouterModule } from '@angular/router';
-
 
 @NgModule({
   declarations: [
@@ -13,6 +11,6 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     AdminDashboardRoutingModule,
-  ]
+  ],
 })
 export class AdminDashboardModule { }
