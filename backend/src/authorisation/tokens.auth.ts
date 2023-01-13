@@ -12,7 +12,7 @@ export const issueToken = async (req: Request, res: Response) => {
     !process.env.TOKEN_PASSWORD
   ) {
     res.status(500).send({
-      data: "Essential environmental variables have not been set. Please see env.example to set up an valid .env file",
+      data: "Essential environmental variables have not been set. Please see env.example to set up a valid .env file",
     });
     return;
   }
