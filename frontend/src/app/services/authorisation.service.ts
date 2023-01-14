@@ -16,6 +16,10 @@ export class AuthorisationService {
     });
   }
 
+  updateBearerToken(authorisationBearerToken: string) {
+    this.authorisationBearerToken = authorisationBearerToken;
+  }
+
   async getBearerToken(): Promise<string> {
     return new Promise((resolve, reject) => {
       const interval = setInterval(() => {

@@ -1,1 +1,5 @@
-<p>admin-login works!</p>
+<input type="text" [(ngModel)]="username" />
+<input type="password" [(ngModel)]="password" />
+<input type="button" (click)="login()" value="Login" />
+<input type="button" (click)="createUser()" value="Create User" />
+

@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { sign, verify } from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { Logger } from "../util/logger";
 
 export const issueToken = async (req: Request, res: Response) => {
   const payload = req.headers?.authorization?.split(" ")[1];
@@ -78,10 +77,13 @@ export const tokenAuth = (req: Request, res: Response, next: NextFunction) => {
       req["access"] = payload;
     }
   }
+  if (type === "Basic") {
+    req["access"] = { title: "Basic", privilages: ["visitor"] };
+  }
   next();
 };
 
-function createToken(
+export function createToken(
   signature: string,
   content: object,
   exparationInDays?: number
