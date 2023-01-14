@@ -18,10 +18,7 @@ export class AdminDashboardGuard implements CanActivate {
     private router: Router
   ) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Promise<boolean> {
+  canActivate(): Promise<boolean> {
     return new Promise(async (resolve, reject) => {
       const authToken = await this.authorisationService.getBearerToken();
 

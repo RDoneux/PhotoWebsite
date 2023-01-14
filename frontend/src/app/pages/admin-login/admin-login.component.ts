@@ -63,36 +63,36 @@ export class AdminLoginComponent {
   }
 
   // this will need to be in the dashboard page eventually
-  async createUser() {
-    var username = await this.hashString(this.username);
-    var password = await this.hashString(this.password);
+  // async createUser() {
+  //   var username = await this.hashString(this.username);
+  //   var password = await this.hashString(this.password);
 
-    this.httpClient
-      .post(
-        'api/user',
-        { username: username, password: password },
-        {
-          headers: new HttpHeaders({
-            Authorization:
-              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aXRsZSI6ImFkbWluIGFjY2VzcyIsInByaXZpbGFnZXMiOlsidmlzaXRvciIsImFkbWluIl0sImlhdCI6MTY3MzYyMzQ5MX0.q-BIFQ3B-pqLwEuwy-truuKwxZ9smIcgBhWbKNpXuCM',
-          }),
-        }
-      )
-      .subscribe({
-        next: (response) => {
-          console.log(response);
-        },
-      });
-  }
+  //   this.httpClient
+  //     .post(
+  //       'api/user',
+  //       { username: username, password: password },
+  //       {
+  //         headers: new HttpHeaders({
+  //           Authorization:
+  //             'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aXRsZSI6ImFkbWluIGFjY2VzcyIsInByaXZpbGFnZXMiOlsidmlzaXRvciIsImFkbWluIl0sImlhdCI6MTY3MzYyMzQ5MX0.q-BIFQ3B-pqLwEuwy-truuKwxZ9smIcgBhWbKNpXuCM',
+  //         }),
+  //       }
+  //     )
+  //     .subscribe({
+  //       next: (response) => {
+  //         console.log(response);
+  //       },
+  //     });
+  // }
 
-  async hashString(value: string) {
-    const saltRounds = 10;
-    const hashedString = await new Promise((resolve, reject) => {
-      bcrypt.hash(value, saltRounds, function (err, hash) {
-        if (err) reject(err);
-        resolve(hash);
-      });
-    });
-    return hashedString;
-  }
+  // async hashString(value: string) {
+  //   const saltRounds = 10;
+  //   const hashedString = await new Promise((resolve, reject) => {
+  //     bcrypt.hash(value, saltRounds, function (err, hash) {
+  //       if (err) reject(err);
+  //       resolve(hash);
+  //     });
+  //   });
+  //   return hashedString;
+  // }
 }

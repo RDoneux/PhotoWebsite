@@ -37,4 +37,13 @@ describe('AuthorisationService', () => {
       expect(token).toEqual('Bearer token');
     });
   });
+
+  describe('update Bearer Token', () => {
+    it('should update the bearer token', () => {
+      service.authorisationBearerToken = 'initial-token';
+      expect(service.authorisationBearerToken).toEqual('initial-token');
+      service.updateBearerToken('updated-token');
+      expect(service.authorisationBearerToken).toEqual('updated-token');
+    });
+  });
 });
