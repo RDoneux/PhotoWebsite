@@ -1,5 +1,26 @@
-<input type="text" [(ngModel)]="username" />
-<input type="password" [(ngModel)]="password" />
-<input type="button" (click)="login()" value="Login" />
-<input type="button" (click)="createUser()" value="Create User" />
-
+<div class="admin-login__container">
+  <div class="admin-login__page-title-wrapper">
+    <app-nav-bar></app-nav-bar>
+    <app-page-title>Admin Login</app-page-title>
+  </div>
+  <div class="admin-login__input-wrapper">
+    <div class="admin-login__user-text-wrapper">
+      <app-text-input
+        [label]="'Username'"
+        [value]="username"
+        (valueChanged)="updateUsername($event)"
+      ></app-text-input>
+      <app-text-input
+        [label]="'Password'"
+        [type]="'password'"
+        [value]="password"
+        (valueChanged)="updatePassword($event)"
+      ></app-text-input>
+    </div>
+    <app-button [label]="'Login'" (submit)="login()"></app-button>
+    <span class="admin-login__feedback"
+      ><span *ngIf="!loading">{{ feedbackMessage }}</span
+      ><app-loading-spinner *ngIf="loading"></app-loading-spinner
+    ></span>
+  </div>
+</div>

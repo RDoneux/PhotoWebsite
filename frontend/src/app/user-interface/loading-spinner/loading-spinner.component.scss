@@ -1,0 +1,19 @@
+.loading-spinner {
+  border: 3px solid rgb(25, 79, 161);
+  border-top: 3px solid transparent;
+
+  border-radius: 50%;
+
+  transform: rotate(360deg);
+
+  animation: rotate 1.5s ease infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rorate(360deg);
+  }
+}

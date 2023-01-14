@@ -19,11 +19,23 @@ export class AdminLoginComponent {
 
   username: string = '';
   password: string = '';
+  feedbackMessage: string = '';
+
+  loading: boolean = false;
+
+  updateUsername(value: string) {
+    this.username = value;
+  }
+  updatePassword(value: string) {
+    this.password = value;
+  }
 
   login() {
     if (!this.username || !this.password) {
+      this.feedbackMessage = 'Please provide a password and username.';
       return;
     }
+    this.loading = true;
 
     this.httpClient
       .get('api/user', {
@@ -40,7 +52,13 @@ export class AdminLoginComponent {
           this.authService.updateBearerToken(response.data);
           this.router.navigate(['admin-dashboard']);
         },
-        error: (error) => console.log(error),
+        error: () => {
+          (this.feedbackMessage =
+            'Incorrect password or username, please try again.'),
+            (this.username = ''),
+            (this.password = '');
+          this.loading = false;
+        },
       });
   }
 
