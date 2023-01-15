@@ -13,7 +13,7 @@ export class AboutService {
 
   async getUserData() {
     const token = await this.authorisationService.getBearerToken();
-    return this.httpClient.get('api/user', {
+    return this.httpClient.get('api/admin-dashboard/about', {
       headers: { Authorization: token },
     });
   }

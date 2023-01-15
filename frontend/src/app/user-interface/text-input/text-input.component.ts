@@ -7,6 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class TextInputComponent {
   @Input() label: string | undefined = undefined;
+  @Input() type: 'text' | 'password' = 'text';
 
   @Input() placeholder: string = '';
   @Input() value: string | undefined = undefined;

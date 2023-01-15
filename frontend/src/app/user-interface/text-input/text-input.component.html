@@ -4,8 +4,7 @@
   </label>
   <input
     class="text-input__input"
-    id="input"
-    type="text"
+    [type]="type"
     [placeholder]="placeholder"
     [ngModel]="value"
     (ngModelChange)="onModelChanged($event)"

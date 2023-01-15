@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminDashboardGuard } from './guards/admin-dashboard.guard';
 
 const routes: Routes = [
   {
@@ -35,6 +36,21 @@ const routes: Routes = [
     path: 'gallery',
     loadChildren: () =>
       import('./pages/gallery/gallery.module').then((m) => m.GalleryModule),
+  },
+  {
+    path: 'admin-dashboard',
+    canActivate: [AdminDashboardGuard],
+    loadChildren: () =>
+      import('./pages/admin-dashboard/admin-dashboard.module').then(
+        (m) => m.AdminDashboardModule
+      ),
+  },
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./pages/admin-login/admin-login.module').then(
+        (m) => m.AdminLoginModule
+      ),
   },
   { path: '**', redirectTo: '/home' },
 ];

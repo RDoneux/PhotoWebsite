@@ -16,7 +16,6 @@ describe('GalleryComponent', () => {
   let component: GalleryComponent;
   let fixture: ComponentFixture<GalleryComponent>;
   let httpMock: any;
-  let authService: any;
 
   beforeEach(async () => {
     let authService = jasmine.createSpyObj(AuthorisationService, [

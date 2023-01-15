@@ -1,0 +1,54 @@
+@import "index";
+
+.admin-login__container {
+  width: 100%;
+  height: 100%;
+
+  display: grid;
+  grid-template-rows: 18% 60%;
+
+  .admin-login__page-title-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    app-page-title {
+      width: 100%;
+    }
+    app-nav-bar {
+      width: 100%;
+    }
+  }
+
+  .admin-login__input-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    width: 80%;
+    height: 250px;
+
+    align-self: center;
+    justify-self: center;
+
+    .admin-login__user-text-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+
+      height: 150px;
+    }
+
+    .admin-login__feedback {
+      display: flex;
+      min-height: 50px;
+
+      align-items: center;
+      justify-content: center;
+
+      span {
+        color: $danger-colour;
+        text-align: center;
+      }
+    }
+  }
+}

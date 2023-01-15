@@ -5,4 +5,6 @@ import { Component, Input } from '@angular/core';
   templateUrl: './page-title.component.html',
   styleUrls: ['./page-title.component.scss'],
 })
-export class PageTitleComponent {}
+export class PageTitleComponent {
+  @Input() showAdminLoginIcon: boolean = false;
+}

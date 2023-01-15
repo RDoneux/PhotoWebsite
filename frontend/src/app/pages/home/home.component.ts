@@ -4,8 +4,6 @@ import {
   fadeInDelayedAnimation,
   showTitleAnimation,
 } from './home.animations';
-import { HttpClient } from '@angular/common/http';
-import { AuthorisationService } from 'src/app/services/authorisation.service';
 
 @Component({
   selector: 'app-home',

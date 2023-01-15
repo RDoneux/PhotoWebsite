@@ -2,13 +2,13 @@ import { Document } from "mongodb";
 import { model, Schema } from "mongoose";
 
 export interface IUser extends Document {
-  imageUrl: string;
-  description: string;
+  username: string;
+  password: string;
 }
 
 export const UserSchema: Schema = new Schema({
-  imageUrl: String,
-  description: String,
+  username: String,
+  password: String,
 });
 
 export default model<IUser>("User", UserSchema);
