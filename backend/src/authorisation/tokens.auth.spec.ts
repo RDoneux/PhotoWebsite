@@ -108,7 +108,7 @@ describe("tokens", () => {
 
     expect(res.status).toHaveBeenCalledWith(500);
     expect(res.send).toHaveBeenCalledWith({
-      data: "Essential environmental variables have not been set. Please see env.example to set up an valid .env file",
+      data: "Essential environmental variables have not been set. Please see env.example to set up a valid .env file",
     });
   });
   it("should return 500 if body isn't included in request", async () => {
@@ -174,6 +174,27 @@ describe("tokens", () => {
 
       expect(req["access"]).toBeTruthy();
     });
+    it('should authorise token with Basic auth type', () => {
+      process.env = {
+        SIGNATURE: "53d22aab-2a74-4607-803f-3583362de564",
+      };
+
+      const req: any = {
+        headers: {
+          authorization:
+            "Basic basic-auth:type",
+        },
+      };
+      const res: any = {
+        status: jest.fn().mockReturnThis(),
+        send: jest.fn(),
+      };
+      const next: any = jest.fn();
+
+      tokenAuth(req, res, next);
+
+      expect(req["access"]).toBeTruthy();
+    })
     it("should not authorise incorrect token with Bearer auth type", () => {
       process.env = {
         SIGNATURE: "53d22aab-2a74-4607-803f-3583362de564",

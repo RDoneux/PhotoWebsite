@@ -52,7 +52,7 @@ export class UserController implements Controller {
         users.forEach(async (user: IUser, index: number) => {
           const usernameMatch = await bcrypt.compare(username, user.username);
           const passwordMatch = await bcrypt.compare(password, user.password);
-
+          
           if (usernameMatch && passwordMatch) {
             resolve(true);
           }

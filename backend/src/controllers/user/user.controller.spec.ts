@@ -1,6 +1,6 @@
 import { collections } from "../../services/database.service";
-import { Logger } from "../../util/logger";
 import { UserController } from "./user.controller";
+import bcrypt from "bcryptjs";
 
 describe("user controller", () => {
   var component: UserController;
@@ -15,84 +15,183 @@ describe("user controller", () => {
 
   it("should initalise routes", () => {
     jest.spyOn(component.router, "get");
-    jest.spyOn(component.router, "patch");
+    jest.spyOn(component.router, "use");
+    jest.spyOn(component.router, "post");
 
     component.initaliseRoutes();
 
     expect(component.router.get).toHaveBeenCalledTimes(1);
-    expect(component.router.patch).toHaveBeenCalledTimes(1);
+    expect(component.router.use).toHaveBeenCalledTimes(1);
+    expect(component.router.post).toHaveBeenCalledTimes(1);
   });
 
-  describe("get User", () => {
-    it("should return 200 with given body", async () => {
+  describe("authenticate", () => {
+    it("should return 401 if no payload is sent", () => {
       const req: any = {};
       const res: any = {
         status: jest.fn().mockReturnThis(),
         send: jest.fn(),
       };
-      collections["user"] = {
-        findOne: jest.fn().mockReturnValue({ value: "test-value" }),
+      component.authenticate(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(401);
+      expect(res.send).toHaveBeenCalledWith({ data: "invalid login" });
+    });
+    it("should return 500 if env.SIGNATURE is not set", () => {
+      const req: any = {
+        headers: {
+          authorization: "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk",
+        },
       };
-      await component.getUser(req, res);
-      expect(res.status).toHaveBeenCalledWith(200);
+      const res: any = {
+        status: jest.fn().mockReturnThis(),
+        send: jest.fn(),
+      };
+
+      component.authenticate(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(500);
       expect(res.send).toHaveBeenCalledWith({
-        data: { value: "test-value" },
+        data: "Essential environmental variables have not been set. Please see env.example to set up a valid .env file",
       });
     });
-    it("should provide 500 response when unable to connect to db for all records", async () => {
-      const req: any = {};
+    it("should return 200 if login details are recognised", async () => {
+      process.env = {
+        SIGNATURE: "53d22aab-2a74-4607-803f-3583362de564",
+      };
+      const req: any = {
+        headers: {
+          authorization: "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk",
+        },
+      };
+      const res: any = {
+        status: jest.fn().mockReturnThis(),
+        send: jest.fn(),
+      };
+
+      collections["user"] = {
+        find: jest.fn().mockReturnThis(),
+        toArray: jest
+          .fn()
+          .mockReturnValue([
+            { username: "test-username", password: "test-password" },
+          ]),
+      };
+
+      jest.spyOn(bcrypt, "compare").mockImplementation(() => {
+        return true;
+      });
+
+      await component.authenticate(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.send).toHaveBeenCalled();
+    });
+    it("should return 401 if login details are not recognised", async () => {
+      process.env = {
+        SIGNATURE: "53d22aab-2a74-4607-803f-3583362de564",
+      };
+      const req: any = {
+        headers: {
+          authorization: "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk",
+        },
+      };
+      const res: any = {
+        status: jest.fn().mockReturnThis(),
+        send: jest.fn(),
+      };
+
+      collections["user"] = {
+        find: jest.fn().mockReturnThis(),
+        toArray: jest
+          .fn()
+          .mockReturnValue([
+            { username: "test-username", password: "test-password" },
+          ]),
+      };
+
+      jest.spyOn(bcrypt, "compare").mockImplementation(() => {
+        return false;
+      });
+
+      await component.authenticate(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(401);
+      expect(res.send).toHaveBeenCalledWith({ data: "invalid login" });
+    });
+    it("should return 500 if internal error", () => {
+      process.env = {
+        SIGNATURE: "53d22aab-2a74-4607-803f-3583362de564",
+      };
+      const req: any = {
+        headers: {
+          authorization: "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk",
+        },
+      };
       const res: any = {
         status: jest.fn().mockReturnThis(),
         send: jest.fn(),
       };
       collections["user"] = undefined;
-      jest.spyOn(Logger, "error");
-      await component.getUser(req, res);
+
+      component.authenticate(req, res);
+
       expect(res.status).toHaveBeenCalledWith(500);
-      expect(Logger.error).toHaveBeenCalled();
+      expect(res.send).toHaveBeenCalled();
     });
   });
-  describe("patch user", () => {
-    it("should provide 200 response with given body", async () => {
+
+  describe("create new user", () => {
+    it("should insert new user", async () => {
       const req: any = {
-        body: { test: "body" },
+        body: { username: "test-username", password: "test-password" },
       };
-      const res: any = { status: jest.fn().mockReturnThis(), send: jest.fn() };
-      collections["user"] = {
-        replaceOne: jest.fn().mockReturnValue(true),
+      const res: any = {
+        status: jest.fn().mockReturnThis(),
+        send: jest.fn(),
       };
-      await component.patchUser(req, res);
-      expect(collections["user"].replaceOne).toHaveBeenCalled();
+      collections["user"] = { insertOne: jest.fn().mockReturnValue(true) };
+
+      await component.createNewUser(req, res);
+
       expect(res.status).toHaveBeenCalledWith(201);
       expect(res.send).toHaveBeenCalledWith({
-        data: `Successfully updated User`,
+        data: "Successfully created new user",
       });
     });
-    it("should provide 400 response if result is not found", async () => {
+
+    it("should insert new user", async () => {
       const req: any = {
-        body: { test: "body" },
+        body: { username: "test-username", password: "test-password" },
       };
-      const res: any = { status: jest.fn().mockReturnThis(), send: jest.fn() };
-      collections["user"] = {
-        replaceOne: jest.fn().mockReturnValue(false),
+      const res: any = {
+        status: jest.fn().mockReturnThis(),
+        send: jest.fn(),
       };
-      await component.patchUser(req, res);
-      expect(collections["user"].replaceOne).toHaveBeenCalled();
+      collections["user"] = { insertOne: jest.fn().mockReturnValue(false) };
+
+      await component.createNewUser(req, res);
+
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.send).toHaveBeenCalledWith({
-        data: `Failed to update User`,
+        data: "Failed to create new user",
       });
     });
-    it("should provide 500 response when error", async () => {
+
+    it("should insert new user", async () => {
       const req: any = {
-        body: { test: "body" },
+        body: { username: "test-username", password: "test-password" },
       };
-      const res: any = { status: jest.fn().mockReturnThis(), send: jest.fn() };
+      const res: any = {
+        status: jest.fn().mockReturnThis(),
+        send: jest.fn(),
+      };
       collections["user"] = undefined;
-      jest.spyOn(Logger, "error");
-      await component.patchUser(req, res);
+
+      await component.createNewUser(req, res);
+
       expect(res.status).toHaveBeenCalledWith(500);
-      expect(Logger.error).toHaveBeenCalled();
+      expect(res.send).toHaveBeenCalled();
     });
   });
 });
