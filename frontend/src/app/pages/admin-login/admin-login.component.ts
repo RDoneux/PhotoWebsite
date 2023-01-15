@@ -74,7 +74,7 @@ export class AdminLoginComponent {
   //       {
   //         headers: new HttpHeaders({
   //           Authorization:
-  //             'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aXRsZSI6ImFkbWluIGFjY2VzcyIsInByaXZpbGFnZXMiOlsidmlzaXRvciIsImFkbWluIl0sImlhdCI6MTY3MzYyMzQ5MX0.q-BIFQ3B-pqLwEuwy-truuKwxZ9smIcgBhWbKNpXuCM',
+  //             'Bearer <admin-level-auth-key>',
   //         }),
   //       }
   //     )
