@@ -5,6 +5,7 @@ $white: #ffffff;
 $black: #2e2e2e;
 
 $grey-100: #f3f3f3;
+$grey-200: #ececec;
 $grey-500: #c8c8c8;
 $grey-800: #808080;
 
@@ -16,6 +17,8 @@ $default-page-colour: $grey-100;
 
 // Text
 $text-colour: $black;
+$text-colour-light: $white;
+$text-colour-muted: $grey-800;
 
 // Input Colours
 $input-border-colour: $grey-500;
@@ -23,6 +26,10 @@ $input-background-colour: $white;
 $input-label-colour: $black;
 $input-box-shadow-colour: $grey-800;
 $input-border-radius: 3px;
+$input-disabled-background: $grey-200;
+
+// Loading Template
+$loading-template-background: $grey-500;
 
 // FONTS
 

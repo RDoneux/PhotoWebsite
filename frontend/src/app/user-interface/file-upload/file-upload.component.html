@@ -1,0 +1,35 @@
+<div
+  class="file-upload__drop-zone"
+  appDragDropFileUpload
+  [ngClass]="{ disable: uploading }"
+  (fileDropped)="uploading ? '' : addFileForUpload($event)"
+>
+  <label for="upload-input">{{ dropZoneMessage }}</label>
+  <input
+    id="upload-input"
+    class="file-upload__file-input"
+    type="file"
+    multiple
+    (change)="addFileForUpload($event)"
+  />
+</div>
+<app-button
+  *ngIf="filesUploaded.length > 0 && !success"
+  [label]="uploadString"
+  [disabled]="uploading"
+  (submit)="uploadFiles()"
+></app-button>
+<div *ngIf="success" class="file-upload__success-button-wrapper">
+  <app-button [label]="'Upload More'" (submit)="reset()"></app-button>
+  <app-button
+    [label]="'Admin Menu'"
+    (submit)="navigateToAdminMenu()"
+  ></app-button>
+</div>
+<div class="file-upload__token-wrapper">
+  <app-file-upload-token
+    *ngFor="let file of filesUploaded"
+    [file]="file"
+    (onRemoved)="removeToken($event)"
+  ></app-file-upload-token>
+</div>

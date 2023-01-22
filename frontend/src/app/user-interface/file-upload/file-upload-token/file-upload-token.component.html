@@ -1,0 +1,31 @@
+<div
+  *ngIf="file"
+  class="file-upload__container"
+  [ngClass]="{ show: !loading, uploading: file.uploading }"
+>
+  <div
+    class="file-upload__information-container file-upload__information-container-top"
+  >
+    <p (click)="removed()">x</p>
+  </div>
+  <img
+    class="file-upload__thumbnail"
+    [ngClass]="{ show: !loading }"
+    loading="eager"
+    [src]="file.imageSrc"
+    (load)="loading = false"
+  />
+  <app-loading-spinner
+    class="file-upload__loading-spinner"
+    *ngIf="loading || file.uploading"
+  ></app-loading-spinner>
+  <span *ngIf="file.uploaded" class="material-symbols-outlined">
+    task_alt
+  </span>
+  <div
+    class="file-upload__information-container file-upload__information-container-bottom"
+  >
+    <p>{{ file.type }}</p>
+    <p>{{ bytes }}</p>
+  </div>
+</div>

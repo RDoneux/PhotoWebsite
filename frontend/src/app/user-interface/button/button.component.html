@@ -1,1 +1,7 @@
-<input class="button" type="button" [value]="label" (click)="onSubmit()" />
+<input
+  class="button"
+  type="button"
+  [value]="label"
+  [disabled]="disabled"
+  (click)="onSubmit()"
+/>

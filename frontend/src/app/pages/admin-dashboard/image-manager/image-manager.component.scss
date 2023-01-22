@@ -1,0 +1,18 @@
+.image-manager__container {
+  padding: 0 1rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  align-items: center;
+
+  padding: 1rem;
+
+  app-page-title {
+    width: 100%;
+  }
+  app-file-upload {
+    width: 90%;
+    margin-top: 1rem;
+  }
+}
