@@ -6,13 +6,11 @@ import { AdminDashboardComponent } from './admin-dashboard.component';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [
-    AdminDashboardComponent
-  ],
+  declarations: [AdminDashboardComponent],
   imports: [
     CommonModule,
     AdminDashboardRoutingModule,
-    RouterModule
+    RouterModule,
   ],
 })
-export class AdminDashboardModule { }
+export class AdminDashboardModule {}
