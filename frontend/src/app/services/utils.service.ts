@@ -13,7 +13,6 @@ export class UtilsService {
       bytes /= 1024;
       i++;
     }
-    var exactSize = Math.round(bytes * 100) / 100 + ' ' + fSExt[i];
-    return exactSize
+    return Math.round(bytes * 100) / 100 + ' ' + fSExt[i];
   }
 }
