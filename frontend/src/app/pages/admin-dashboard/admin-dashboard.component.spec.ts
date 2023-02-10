@@ -6,7 +6,7 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ImageManagerComponent } from './image-manager/image-manager.component';
+import { ImageManagerComponent } from './image-manager/image-upload.component';
 
 describe('AdminDashboardComponent', () => {
   let component: AdminDashboardComponent;
