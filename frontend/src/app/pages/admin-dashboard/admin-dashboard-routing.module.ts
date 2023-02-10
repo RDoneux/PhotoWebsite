@@ -5,6 +5,7 @@ import { AdminDashboardComponent } from './admin-dashboard.component';
 const routes: Routes = [
   { path: '', component: AdminDashboardComponent },
   { path: 'image-upload', loadChildren: () => import('./image-manager/image-upload.module').then(m => m.ImageManagerModule) },
+  { path: 'image-manager', loadChildren: () => import('./image-manager/image-manager.module').then(m => m.ImageManagerModule) },
 ];
 
 @NgModule({
