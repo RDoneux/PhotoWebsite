@@ -36,7 +36,6 @@ export class FileUploadComponent implements OnInit {
       files[key]['imageSrc'] = await this.imageFileToBase64(files[key]);
       files[key]['id'] = uuid();
       this.filesUploaded.push(files[key]);
-
       this.uploadString = `Upload ${this.filesUploaded.length} image${
         this.filesUploaded.length > 1 ? 's' : ''
       }`;
@@ -47,7 +46,6 @@ export class FileUploadComponent implements OnInit {
     const authToken = await this.authorisationService.getBearerToken();
     this.uploading = true;
     this.dropZoneMessage = 'Uploading...';
-    var hasError: boolean = false;
     this.filesUploaded.forEach((file: UploadFile, index: number) => {
       file.uploading = true;
 
@@ -67,11 +65,11 @@ export class FileUploadComponent implements OnInit {
 
             if (index === this.filesUploaded.length - 1) {
               this.success = true;
-              this.dropZoneMessage = this.setSuccessMessage(hasError);
+              this.dropZoneMessage = this.setSuccessMessage(false);
             }
           },
           error: () => {
-            hasError = true;
+            this.dropZoneMessage = this.setSuccessMessage(true);
           },
         });
     });
@@ -101,7 +99,7 @@ export class FileUploadComponent implements OnInit {
   setSuccessMessage(hasError: boolean): string {
     return hasError
       ? 'There was an issue with one or more uploads. Please try again later'
-      : `${this.filesUploaded.length} file${
+      : `${this.filesUploaded.length ? this.filesUploaded.length : '0'} file${
           this.filesUploaded.length != 1 ? 's' : ''
         } successfully uploaded.`;
   }
