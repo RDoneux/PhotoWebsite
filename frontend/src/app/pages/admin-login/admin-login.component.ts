@@ -50,7 +50,7 @@ export class AdminLoginComponent {
       .subscribe({
         next: (response: any) => {
           this.authService.updateBearerToken(response.data);
-          this.router.navigate(['admin-dashboard']);
+          this.router.navigate(['/admin-dashboard']);
         },
         error: () => {
           (this.feedbackMessage =
