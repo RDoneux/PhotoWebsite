@@ -6,6 +6,7 @@ import { ButtonModule } from './button/button.module';
 import { LoadingSpinnerModule } from './loading-spinner/loading-spinner.module';
 import { NavBarModule } from './nav-bar/nav-bar.module';
 import { FileUploadModule } from './file-upload/file-upload.module';
+import { AdminNavBarModule } from './admin-nav-bar/admin-nav-bar.module';
 
 @NgModule({
   declarations: [],
@@ -18,6 +19,7 @@ import { FileUploadModule } from './file-upload/file-upload.module';
     NavBarModule,
     TextAreaModule,
     FileUploadModule,
+    AdminNavBarModule,
   ],
 })
 export class UserInterfaceModule {}
